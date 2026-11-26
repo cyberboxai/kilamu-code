@@ -101,13 +101,20 @@ The gaps above are addressed in the harness. The paid run has not happened yet.
   - `security-fix` (path traversal and SQL injection, including a second injectable function the task does not name);
   - `log-triage` (wrong batch totals, with the clue in a 4,287-line log);
   - `multi-feature` (4 independent modules with 19 tests, sized to make SUBAGENT mode possible).
-- **Reference solutions (`tests/fixtures/ab-solutions/`).** They live outside the fixture directory, so trials cannot read them. `tests/benchmarks/ab-fixtures.test.ts` proves that every fixture fails as shipped and passes with its solution, with `test/` unchanged.
+- **Reference solutions (`tests/fixtures/ab-solutions/`).** They live outside the fixture directory. `tests/benchmarks/ab-fixtures.test.ts` proves several things for every fixture:
+  - it fails as shipped;
+  - it passes with its solution, with `test/` unchanged;
+  - every path its TASK.md names is actually shipped. The log-triage log was at first dropped by the repository's `*.log` ignore rule, which this check now catches.
+- **Keeping solutions out of reach.** Arm B's `--plugin-dir` is a temp copy of the plugin's own files (`.claude-plugin`, `agents`, `bin`, `hooks`, `skills`, `src`, `package.json`), not the repository. So neither arm learns the repository path. A session whose output mentions `ab-solutions` is marked invalid.
 - **Trial setup.** Each trial copies only the fixture's git-visible files, so ignored local state such as `.omc/` cannot leak in. (In the first run, a stray 342-byte `.omc` state file was copied into both arms of `feature-slugify`.)
+- **Tamper check.** The baseline is the trial's own `test/` tree, hashed before the agent runs, not the source directory.
 - **Arm order.** It is shuffled per (run, task) from a recorded `--seed`.
 - **`--isolate`.** It passes `--setting-sources project,local --strict-mcp-config` to both arms. `--bare` is not used, because it also disables plugin hooks (Kilamu's included) and accepts only API-key auth.
   - **Unverified:** whether this drops user-enabled plugins, and whether the global CLAUDE.md still loads. `claude plugin list` ignores these flags, so it cannot show this.
   - **Evidence:** each trial now records the `plugins` and MCP server count from its session's `system/init` event.
-- **Engagement.** Each trial records Kilamu CLI calls, Kilamu skill invocations and Agent/Task calls made by the main agent, parsed from `--output-format stream-json`. The report shows "Kilamu engaged" per cell.
+  - **Enforced:** after every (run, task) pair, arm B must load exactly arm A's plugins plus Kilamu. Otherwise the run aborts and writes what it has, so a broken isolation costs at most one pair.
+- **Engagement.** Each trial records Kilamu CLI calls (including multi-line and path-qualified invocations), Kilamu skill invocations, Kilamu agent calls and all Agent/Task calls made by the main agent. These are parsed from `--output-format stream-json`. The report shows "Kilamu engaged" per cell.
+- **Costs and tokens.** A timed-out session keeps its partial stream. A trial without a cost figure is reported as missing, never counted as 0. Tokens come from `modelUsage`, which covers all models including subagents, with `usage` (main loop only) as the fallback. The source is recorded per trial.
 
 Planned run: `--runs 5 --isolate`, 7 tasks × 5 × 2 = 70 trials on `sonnet`. The first run's per-trial cost suggests about 9–20 USD (ESTIMATED). It needs the founder's go-ahead.
 

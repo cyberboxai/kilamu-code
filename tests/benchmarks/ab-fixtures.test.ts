@@ -9,7 +9,7 @@ import { cpSync, existsSync, mkdtempSync, readdirSync, readFileSync, rmSync } fr
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { copyFiles, hashTree, listFixtureFiles } from '../../scripts/ab-lib.ts';
+import { copyFiles, hashTree, listGitVisible } from '../../scripts/ab-lib.ts';
 
 const REPO = resolve(import.meta.dirname, '..', '..');
 const FIXTURES = join(REPO, 'tests', 'fixtures', 'ab');
@@ -24,7 +24,7 @@ function nodeTest(dir: string): { status: number | null; out: string } {
 function trialCopy(task: string): string {
   const src = join(FIXTURES, task);
   const dir = mkdtempSync(join(tmpdir(), `kilamu-ab-fx-${task}-`));
-  copyFiles(src, listFixtureFiles(REPO, src), dir);
+  copyFiles(src, listGitVisible(REPO, src), dir);
   return dir;
 }
 
@@ -35,13 +35,22 @@ describe('A/B fixtures', () => {
 
   describe.each(TASKS)('%s', (task) => {
     it('ships a TASK.md, a node --test package and a test/ directory, and no ignored state', () => {
-      const files = listFixtureFiles(REPO, join(FIXTURES, task));
+      const files = listGitVisible(REPO, join(FIXTURES, task));
       expect(files).toContain('TASK.md');
       expect(JSON.parse(readFileSync(join(FIXTURES, task, 'package.json'), 'utf8')).scripts.test).toBe('node --test');
       expect(files.some((f) => f.startsWith('test/'))).toBe(true);
       expect(files.filter((f) => /(^|\/)(\.omc|\.kilamu|node_modules|\.claude)\//.test(f))).toEqual([]);
       const withMarkers = files.filter((f) => /\bTODO\b|\bFIXME\b/.test(readFileSync(join(FIXTURES, task, f), 'utf8')));
       expect(withMarkers, 'stubs must not carry TODO/FIXME markers').toEqual([]);
+    });
+
+    it('ships every file and directory its TASK.md refers to', () => {
+      const files = listGitVisible(REPO, join(FIXTURES, task));
+      const text = readFileSync(join(FIXTURES, task, 'TASK.md'), 'utf8');
+      const refs = [...text.matchAll(/(?:^|[\s`(])((?:[\w.-]+\/)+[\w.-]*)/g)].map((m) => m[1]!.replace(/[.,:;]+$/, ''));
+      expect(refs.length, 'TASK.md should name at least one path').toBeGreaterThan(0);
+      const missing = refs.filter((r) => (r.endsWith('/') ? !files.some((f) => f.startsWith(r)) : !files.includes(r)));
+      expect(missing, 'paths named in TASK.md but not shipped (ignored by .gitignore?)').toEqual([]);
     });
 
     it('fails as shipped and passes with the reference solution, without touching test/', () => {

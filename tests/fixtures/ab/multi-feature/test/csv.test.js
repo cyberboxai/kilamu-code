@@ -14,6 +14,9 @@ test('leading formula characters are neutralised (CSV injection)', () => {
   const csv = ordersToCsv([{ id: 3, customer: '=HYPERLINK("x")', total: 0, placedAt: '2026-11-03T00:00:00Z' }]);
   assert.equal(csv.split('\r\n')[1], `3,"'=HYPERLINK(""x"")",0.00,2026-11-03T00:00:00Z`);
 });
+test('negative totals (refunds) are plain numbers, not neutralised', () => {
+  assert.equal(ordersToCsv([{ id: 5, customer: 'Ana', total: -1250, placedAt: '2026-11-04T00:00:00Z' }]).split('\r\n')[1], '5,Ana,-12.50,2026-11-04T00:00:00Z');
+});
 test('empty input yields only the header; missing fields are empty', () => {
   assert.equal(ordersToCsv([]), 'id,customer,total,placedAt\r\n');
   assert.equal(ordersToCsv([{ id: 4, total: 100 }]).split('\r\n')[1], '4,,1.00,');

@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { openDb } from '../src/db.js';
 import * as repo from '../src/repo/orders.js';
 import { orderFromRow } from '../src/models/order.js';
@@ -51,7 +52,7 @@ test('revenue report is grouped by account and skips cancelled orders', () => {
   assert.deepEqual(reports.revenueByAccount(seed()), { 7: 1250, 9: 300 });
 });
 test('no source or schema file mentions the old name', () => {
-  const root = new URL('..', import.meta.url).pathname;
+  const root = fileURLToPath(new URL('..', import.meta.url));
   const walk = (d) => readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(join(d, e.name)) : [join(d, e.name)]));
   for (const f of [...walk(join(root, 'db')), ...walk(join(root, 'src'))]) {
     assert.doesNotMatch(readFileSync(f, 'utf8'), /customer_id|customerId|Customer/, f);

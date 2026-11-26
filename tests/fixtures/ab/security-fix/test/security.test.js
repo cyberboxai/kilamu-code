@@ -9,6 +9,7 @@ const forbidden = (fn) => assert.throws(fn, (e) => e.code === 'EFORBIDDEN', 'exp
 test('legitimate uploads still work, including subdirectories', () => {
   assert.equal(readUpload('report.txt').trim(), 'hello from a legitimate upload');
   assert.equal(readUpload('2026/q1.txt').trim(), 'nested upload');
+  assert.equal(readUpload('..notes.txt').trim(), 'notes with a dotted name');
 });
 test('path traversal is refused with code EFORBIDDEN', () => {
   forbidden(() => readUpload('../secret.txt'));

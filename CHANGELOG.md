@@ -9,7 +9,12 @@ All notable changes follow [Keep a Changelog](https://keepachangelog.com/) and S
 - `repository` and `homepage` in the plugin manifest. The README install instructions point at `cyberboxai/kilamu-code`.
 
 ### Fixed
-- The A/B harness copies only a fixture's git-visible files, so ignored local state no longer leaks into trials. The test-tamper hash now covers nested directories.
+- **Trial inputs.** The A/B harness copies only a fixture's git-visible files, so ignored local state no longer leaks into trials.
+- **Tamper check.** The hash now covers nested directories and uses the trial copy as its baseline.
+- **Plugin copy.** Arm B gets a staged copy of the plugin instead of the repository root, which kept the reference solutions discoverable.
+- **Isolation.** `--isolate` aborts when arm B does not load exactly arm A's plugins plus Kilamu.
+- **Missing costs.** Timed-out sessions keep their partial stream, and missing costs are reported, not counted as 0.
+- **Log-triage log.** The log is no longer dropped by the `*.log` ignore rule.
 - `scripts/ab-bench.ts` records the output directory relative to the repository, so result files do not leak absolute local paths.
 
 ## [0.1.0] — 2026-11-25

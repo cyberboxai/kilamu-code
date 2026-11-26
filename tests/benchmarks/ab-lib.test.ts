@@ -3,7 +3,7 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
-import { copyFiles, hashTree, listFixtureFiles, parseStream, prng, shuffle } from '../../scripts/ab-lib.ts';
+import { checkArmPlugins, copyFiles, engaged, hashTree, listGitVisible, parseStream, prng, shuffle, totalTokens } from '../../scripts/ab-lib.ts';
 
 const dirs: string[] = [];
 const tmp = (): string => {
@@ -55,8 +55,12 @@ describe('parseStream', () => {
       toolUse('Bash', { command: 'echo kilamu' }),
       toolUse('Bash', { command: 'ls .kilamu/state' }),
       toolUse('Bash', { command: 'cat kilamu-code/README.md' }),
+      toolUse('Bash', { command: 'npm test\nkilamu verify T2' }),
+      toolUse('Bash', { command: '"$CLAUDE_PLUGIN_ROOT/bin/kilamu" status' }),
+      toolUse('Bash', { command: '/opt/k/bin/kilamu next --json' }),
+      toolUse('Bash', { command: 'echo done # see kilamu docs' }),
     ));
-    expect(s.engagement.kilamuCliCalls).toBe(4);
+    expect(s.engagement.kilamuCliCalls).toBe(7);
   });
 
   it('counts Kilamu skills and main-agent subagent calls, ignoring nested subagent traffic', () => {
@@ -68,7 +72,7 @@ describe('parseStream', () => {
       toolUse('Agent', { prompt: 'nested' }, 'toolu_parent'),
       toolUse('Bash', { command: 'kilamu status' }, 'toolu_parent'),
     ));
-    expect(s.engagement).toEqual({ subagentCalls: 2, kilamuCliCalls: 0, kilamuSkills: ['kilamu-code:orchestrate'] });
+    expect(s.engagement).toEqual({ subagentCalls: 2, kilamuAgentCalls: 1, kilamuCliCalls: 0, kilamuSkills: ['kilamu-code:orchestrate'] });
   });
 
   it('counts unparseable lines instead of throwing', () => {
@@ -122,7 +126,7 @@ describe('prng and shuffle', () => {
   });
 });
 
-describe('listFixtureFiles and copyFiles', () => {
+describe('listGitVisible and copyFiles', () => {
   it('lists tracked and untracked-but-not-ignored files only, and copies them', () => {
     const repo = tmp();
     const git = (...a: string[]) => {
@@ -140,7 +144,7 @@ describe('listFixtureFiles and copyFiles', () => {
     write(repo, 'fx/task/node_modules/m/index.js');
     write(repo, 'fx/other/TASK.md');
 
-    const files = listFixtureFiles(repo, join(repo, 'fx', 'task'));
+    const files = listGitVisible(repo, join(repo, 'fx', 'task'));
     expect(files).toEqual(['TASK.md', 'src/a.js', 'test/new.test.js']);
 
     const dest = tmp();
@@ -157,8 +161,50 @@ describe('listFixtureFiles and copyFiles', () => {
   it('refuses fixtures outside the repository and empty fixtures', () => {
     const repo = tmp();
     spawnSync('git', ['init', '-q'], { cwd: repo });
-    expect(() => listFixtureFiles(repo, tmp())).toThrow(/outside the repository/);
+    expect(() => listGitVisible(repo, tmp())).toThrow(/outside the repository/);
     mkdirSync(join(repo, 'empty'));
-    expect(() => listFixtureFiles(repo, join(repo, 'empty'))).toThrow(/no tracked files/);
+    expect(() => listGitVisible(repo, join(repo, 'empty'))).toThrow(/no tracked files/);
+  });
+});
+
+describe('engaged', () => {
+  const none = { subagentCalls: 3, kilamuAgentCalls: 0, kilamuCliCalls: 0, kilamuSkills: [] };
+  it('is false for generic subagents only, true for any Kilamu CLI call, skill or agent', () => {
+    expect(engaged(none)).toBe(false);
+    expect(engaged({ ...none, kilamuCliCalls: 1 })).toBe(true);
+    expect(engaged({ ...none, kilamuSkills: ['kilamu-code:review'] })).toBe(true);
+    expect(engaged({ ...none, kilamuAgentCalls: 1 })).toBe(true);
+  });
+});
+
+describe('totalTokens', () => {
+  it('prefers modelUsage summed across models (subagent and background traffic included)', () => {
+    expect(totalTokens({
+      usage: { input_tokens: 1, output_tokens: 1 },
+      modelUsage: {
+        'claude-sonnet': { inputTokens: 10, outputTokens: 20, cacheReadInputTokens: 300, cacheCreationInputTokens: 40 },
+        'claude-haiku': { inputTokens: 5, outputTokens: 5 },
+      },
+    })).toEqual({ tokens: 380, source: 'modelUsage' });
+  });
+  it('falls back to usage, then to null', () => {
+    expect(totalTokens({ usage: { input_tokens: 2, output_tokens: 3, cache_read_input_tokens: 5, cache_creation_input_tokens: 7 }, modelUsage: {} }))
+      .toEqual({ tokens: 17, source: 'usage' });
+    expect(totalTokens({ type: 'result' })).toEqual({ tokens: null, source: null });
+    expect(totalTokens(null)).toEqual({ tokens: null, source: null });
+  });
+});
+
+describe('checkArmPlugins', () => {
+  it('accepts arm B = arm A plus Kilamu', () => {
+    expect(checkArmPlugins([], ['kilamu-code'])).toBeNull();
+    expect(checkArmPlugins(['agents-md'], ['agents-md', 'kilamu-code@inline'])).toBeNull();
+  });
+  it('rejects unknown plugin lists, Kilamu in arm A, and any other difference', () => {
+    expect(checkArmPlugins(null, ['kilamu-code'])).toMatch(/cannot be checked/);
+    expect(checkArmPlugins(['kilamu-code'], ['kilamu-code'])).toMatch(/arm A loaded Kilamu/);
+    expect(checkArmPlugins(['omc'], ['kilamu-code'])).toMatch(/missing plugins.*omc/);
+    expect(checkArmPlugins([], ['kilamu-code', 'omc'])).toMatch(/exactly Kilamu/);
+    expect(checkArmPlugins([], [])).toMatch(/adds: nothing/);
   });
 });
