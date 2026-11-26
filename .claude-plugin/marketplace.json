@@ -1,0 +1,14 @@
+{
+  "name": "kilamu-code-marketplace",
+  "owner": {
+    "name": "Wilker Flores"
+  },
+  "plugins": [
+    {
+      "name": "kilamu-code",
+      "source": "./",
+      "description": "Kilamu Code \u2014 intelligent multi-agent engineering system for Claude Code."
+    }
+  ],
+  "description": "Kilamu Code by Wilker Flores \u2014 intelligent multi-agent engineering system for Claude Code."
+}

@@ -1,0 +1,23 @@
+{
+  "name": "kilamu-code",
+  "displayName": "Kilamu Code",
+  "version": "0.1.0",
+  "description": "The Intelligent Multi-Agent Engineering System for Claude Code: adaptive single/subagent/team orchestration, durable execution state, selective context, evidence-based verification. Build More. Waste Less. Engineer Smarter.",
+  "author": {
+    "name": "Wilker Flores"
+  },
+  "license": "MIT",
+  "keywords": [
+    "orchestration",
+    "multi-agent",
+    "agent-teams",
+    "context",
+    "verification",
+    "knowledge-graph",
+    "sqlite",
+    "local-first"
+  ],
+  "network": {
+    "hosts": []
+  }
+}
