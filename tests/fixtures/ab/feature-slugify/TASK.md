@@ -1,0 +1,1 @@
+Add a `slugify(input)` function to src/text.js and export it. It must produce URL slugs: lowercase, ASCII letters and digits only (strip accents), words separated by single dashes, no leading or trailing dashes, and an empty string for empty input. The expected behaviour is specified by the tests in test/.
