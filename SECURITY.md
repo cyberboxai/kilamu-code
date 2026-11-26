@@ -1,0 +1,40 @@
+# Security
+
+Kilamu Code runs locally, with your user's privileges, inside Claude Code sessions. This document covers its threat model and its controls. To report a vulnerability, contact the maintainer, Wilker Flores, privately. Do not open a public issue.
+
+## Principles
+- **Local-first.** Kilamu makes no network calls, sends no telemetry and never uploads anything to the cloud. `plugin.json` declares `network.hosts: []`.
+- **No silent escalation.** Kilamu never modifies Claude Code settings or permissions on its own. Verification can only run project tooling that matches the command policy. Project files and project config cannot widen the policy. **Scope of this boundary:** the policy protects against plans and repository content. It does not protect against a model that deliberately crafts the environment of its own `kilamu` command (for example by setting `KILAMU_CONFIG_HOME` to a directory it controls; `extraPrograms` are ignored whenever that override is set). The command itself, including any environment prefix, still goes through Claude Code's own Bash permission check, which remains the outer boundary. The only command that writes settings is `kilamu statusline install`. It is explicit, refuses to overwrite an existing statusline without `--force`, keeps a backup, and can be undone with `kilamu statusline uninstall`.
+- **Plugin agents cannot escalate.** The platform ignores `permissionMode`, `hooks` and `mcpServers` in plugin agent definitions, and Kilamu's agents declare none of them. Read-only roles get read-only tool lists.
+- **No credential handling.** Kilamu never reads Claude Code credentials, subscription tokens or other tools' auth data. It also does not read `~/.claude.json` or `~/.claude/teams/**`.
+
+## Threat model
+
+| Asset | Threat | Control |
+|---|---|---|
+| Your machine | Model-authored verification commands run arbitrary code outside Claude Code's permission prompt | Commands are parsed into argv and run **without a shell**. Each command must match an **argv template** for project tooling (`src/verification/policy.ts`): `npm/pnpm/yarn/bun test`, `… run <script that exists in package.json>` (flags only after `--`), `node --test` or `node <existing project script>`, `python -m pytest/unittest/mypy/…` or `python <project .py>`, `go test/vet/build` (no `-exec`, `-toolexec` or `-overlay`), `cargo test/build/check/clippy/fmt` (no `--config` or `-Z`), `make <targets>`, fixed `mvn`/`gradle`/`dotnet` phases, and direct runners (`pytest`, `vitest`, `jest`, `tsc`, `eslint` and similar). No argument may be absolute, start with `~`, or contain `..`. Plans are rejected at `kilamu plan create` if any command fails the policy. Extra programs can only be allowed by the user in `~/.config/kilamu-code/verification.json`, never by project config or the model. Timeouts kill the whole process group. **Residual risk, by design:** these runners execute project code, including code an agent just wrote, exactly as running the tests yourself would. The policy prevents *other* commands. It is not a sandbox. |
+| Secrets | Leaking into the index, artifacts, memory or logs | Sensitive paths are never indexed or read: `.env*` (except example, sample and template files), keys (`*.pem`, `*.key`, `id_*`), keystores, `.npmrc`, `.pypirc`, `.netrc`, `credentials*`, `secrets*`, `*.tfstate`, and the `.ssh`, `.aws`, `.gnupg`, `.kube` and `.docker` directories. Regex redaction runs before anything is persisted (private keys, Anthropic/OpenAI/AWS/GitHub/GitLab/Slack/Stripe/Google keys, JWTs, URL credentials, `password=`-style assignments). Memory rejects any entry that contains a secret. Data files are created with mode 0600 and directories with 0700. |
+| Agent behaviour | Prompt injection via indexed code, documents, PDFs or tool output | Retrieved content is wrapped in `<<<KILAMU-UNTRUSTED …>>>` fences. Lines that look like instructions are flagged. Skills and agents state that content is data, never instructions. Indexed content can never change permissions or tool access. |
+| Filesystem | Path traversal or symlink escape via plan paths, artifact ids or `--file` | `safeResolve` performs a lexical check plus a realpath check against the project root. Artifact ids are validated against `^a_[0-9a-f]{16}$`. Plan paths must be project-relative and may not contain `..`. Symlinks are skipped during indexing. A symlinked `.kilamu/` is refused. |
+| Integrity of "done" | An agent claims success | Only the verification engine can set VERIFIED. It needs a persisted run whose verdict matches **and that is bound to the task's current attempt** (checkpoint). Forged and stale runs are rejected. Every verification consumes an attempt, so retries stay bounded. The only exception is reconciled *verify-first* work. Anyone who started an attempt of a task is refused as its attester. |
+| Cloned repositories | A `.kilamu/` shipped inside a repository (planted DB, config or symlinks) | Kilamu only uses a data directory registered by `kilamu init` in the user-scope trust file (`~/.config/kilamu-code/trusted-projects.json`). The record binds the realpath to the hash of a random secret token that `init` writes to `.kilamu/.trust-token`, so a copied or re-created directory is not trusted. `init` refuses to adopt a non-empty untrusted `.kilamu/`. All writes use symlink-safe temp files (O_EXCL\|O_NOFOLLOW). Hooks and the statusline silently ignore untrusted directories. `init` refuses a `.kilamu/` that git tracks. Log writes use `O_NOFOLLOW`, and symlinked artifact paths are refused. No command creates state in a directory that was not initialised. |
+| Brief and command injection | Task titles copied into shell commands by agents | Values are single-quoted with POSIX escaping in briefs. |
+| Settings | Clobbering the user's statusline or settings | Install refuses an existing statusline unless `--force`, takes a backup, writes atomically, and refuses to modify invalid JSON. Uninstall only touches a statusline Kilamu itself installed. |
+| Availability | Hooks breaking sessions | Hooks are no-ops when `.kilamu/` is absent, and internal errors exit 0. They have 15–20 s timeouts and never make model calls. |
+| Data | Corruption | WAL mode, transactions and a `quick_check` on open. A corrupt database is quarantined, never deleted. |
+
+## Known limitations
+- Redaction is pattern-based and can miss novel secret formats. Path exclusion is the primary control.
+- Injection detection is heuristic. Fencing reduces the risk but does not remove it.
+- Attestation identity is self-declared (`--as`). Names that started an attempt are refused, but an agent could invent a new name. Attestations are always labelled ATTESTED in reports so that a human can audit them.
+- `file_contains` regexes are author-supplied and run on up to 5 MB, so ReDoS is possible. Prefer substring patterns.
+- Read-only roles have no Edit or Write tools, but they do have Bash (needed for `kilamu`). Their read-only status is an instruction, not something Kilamu enforces.
+- `network.hosts: []` in `plugin.json` declares intent. Verification runners such as `npm test` may still reach the network if the project's tests do.
+- `.mcp.json` server names are read. Their env, args and headers are never read into output.
+
+## Security review findings (0.1.0)
+An independent security review found 2 HIGH, 6 MEDIUM and 4 LOW issues:
+- **HIGH:** the allowlist bypass (H1) and trust in a shipped `.kilamu/` (H2).
+- **MEDIUM:** self-attestation after release, VERIFIED reported despite cancellation, CLI file arguments skipping the sensitive-path policy, unredacted plan and summary text, shell injection in briefs, and breakable fences.
+
+All HIGH and MEDIUM findings were fixed and covered by regression tests (`tests/e2e/review-regressions.test.ts`, `tests/unit/verification/policy.test.ts`, `tests/unit/core/*`). LOW items are either fixed (redaction patterns, file modes via `umask 077`, memory evidence must resolve to a real VERIFIED run or artifact) or listed above. Details are in `PROGRESS.md`.
