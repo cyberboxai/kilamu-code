@@ -1,0 +1,30 @@
+{
+  "name": "kilamu-code",
+  "version": "0.1.0",
+  "description": "Kilamu Code — the intelligent multi-agent engineering system for Claude Code. Build More. Waste Less. Engineer Smarter.",
+  "author": "Wilker Flores",
+  "license": "MIT",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "bin": {
+    "kilamu": "bin/kilamu"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:unit": "vitest run tests/unit",
+    "test:integration": "vitest run tests/integration",
+    "test:e2e": "vitest run tests/e2e",
+    "bench": "node --disable-warning=ExperimentalWarning scripts/bench.ts",
+    "validate:plugin": "claude plugin validate .",
+    "check": "npm run typecheck && npm test"
+  },
+  "devDependencies": {
+    "@types/node": "^22.18.0",
+    "typescript": "~5.9.3",
+    "vitest": "^5.1.2"
+  }
+}
