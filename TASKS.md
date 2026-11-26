@@ -47,7 +47,8 @@ Status values: ✅ done and verified · 🟡 done, not fully verified · ⏳ pla
 ## Phase 6: Production readiness 🟡
 - ✅ Security review, with HIGH and MEDIUM findings fixed and regression-tested
 - ✅ Architecture and code reviews, with must-fix items fixed and regression-tested
-- ⏳ Cross-platform CI (macOS, WSL)
+- ✅ CI on Linux and macOS × Node 22 and 24 (`.github/workflows/ci.yml`)
+- ⏳ CI on Windows/WSL
 - ✅ Plugin icon (`.claude-plugin/icon.png`)
 - ✅ Update-safe statusline shim (R-07)
 

@@ -8,6 +8,7 @@ Last updated: 2026-11-26 · Lead: Claude (founding engineering team) · Founder:
 | `npm run typecheck` (tsc strict, erasableSyntaxOnly) | clean, 0 errors |
 | `npm test` (vitest: unit, integration, e2e) | **391/391 passed** in 25 files (latest full run; no `.skip`/`.only`) |
 | `claude plugin validate .` | ✔ Validation passed |
+| GitHub Actions CI (`.github/workflows/ci.yml`) | typecheck + 391/391 tests green on Linux and macOS × Node 22 and 24. Plugin validates with an unauthenticated, pinned CLI |
 | `claude --plugin-dir . plugin list` / `plugin details` | ✔ loaded. 6 skills, 6 agents, 5 hooks; ~1,085 always-on tokens (Claude Code's estimate) |
 | Live headless session (`claude -p --model haiku --plugin-dir .`) | SessionStart injected `[Kilamu Code] Active execution …`; `kilamu version` ran as a bare command through the plugin's `bin/` |
 | Local benchmarks (`npm run bench`) | see `docs/COST_ENGINE.md` |
@@ -51,7 +52,7 @@ These have automated tests, and where noted, live or dogfood evidence.
 - **Per-session task attribution through `CLAUDE_ENV_FILE`.** Implemented and safe when absent (tasks stay unattributed and ownership is never guessed). The live export was not observed: the live check was not run in this environment.
 - **PostToolUse automatic compression of Bash output.** Opt-in and off by default. Unit-level only; `updatedToolOutput` not exercised live.
 - **Statusline in a live interactive session.** Tested with real payload shapes, not installed in a live UI.
-- **macOS/WSL.** Linux only.
+- **Windows/WSL.** Untested. Linux and macOS run in CI.
 
 ### PARTIALLY IMPLEMENTED
 - **Duplicate-read tracking.** The API exists and is tested; no hook feeds it.
@@ -63,7 +64,7 @@ These have automated tests, and where noted, live or dogfood evidence.
 - Tree-sitter parsers.
 - Worktree isolation for TEAM writers.
 - Re-planning of active executions.
-- Cross-platform CI.
+- CI on Windows/WSL.
 
 ### BLOCKED (platform)
 - Per-agent token or cost attribution: not exposed by Claude Code.

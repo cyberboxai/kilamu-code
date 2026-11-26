@@ -21,4 +21,4 @@ Priorities are ordered by expected verified-output-per-token impact.
 
 ## Later
 - Optional external providers, explicitly configured and authorised by the user.
-- Cross-platform CI (macOS, Windows/WSL).
+- CI on Windows/WSL. Linux and macOS already run in CI.
