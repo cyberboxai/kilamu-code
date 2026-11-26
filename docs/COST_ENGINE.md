@@ -92,9 +92,23 @@ Totals: both arms verified 9/9. Cost per verified task: A 0.1227 USD, B 0.1183 U
 - **Kilamu did not engage.** No trial in either arm spawned a subagent. On these small single-agent tasks, arm B measured Kilamu's overhead only, not its orchestration, context packs or verification.
 - **Confound.** Both arms load the same user-level configuration (global CLAUDE.md, other enabled plugins). Only `--plugin-dir` differs.
 
-### What is still needed before any savings claim
-1. Fixtures for the remaining task kinds (schema investigation, security review, log triage), plus at least one multi-file task large enough to trigger SUBAGENT mode.
-2. N ≥ 5 runs per cell, with arm order randomised per run.
-3. A clean user configuration for both arms, for example an isolated `CLAUDE_CONFIG_DIR`.
+### Harness v2 (ready, not yet run)
+The gaps above are addressed in the harness. The paid run has not happened yet.
+
+- **Fixtures (`tests/fixtures/ab/`).** There are 7 tasks:
+  - the original 3;
+  - `schema-rename` (rename `customer_id` → `account_id` across schema, model, repository, serializer, API and report, checked with `node:sqlite`);
+  - `security-fix` (path traversal and SQL injection, including a second injectable function the task does not name);
+  - `log-triage` (wrong batch totals, with the clue in a 4,287-line log);
+  - `multi-feature` (4 independent modules with 19 tests, sized to make SUBAGENT mode possible).
+- **Reference solutions (`tests/fixtures/ab-solutions/`).** They live outside the fixture directory, so trials cannot read them. `tests/benchmarks/ab-fixtures.test.ts` proves that every fixture fails as shipped and passes with its solution, with `test/` unchanged.
+- **Trial setup.** Each trial copies only the fixture's git-visible files, so ignored local state such as `.omc/` cannot leak in. (In the first run, a stray 342-byte `.omc` state file was copied into both arms of `feature-slugify`.)
+- **Arm order.** It is shuffled per (run, task) from a recorded `--seed`.
+- **`--isolate`.** It passes `--setting-sources project,local --strict-mcp-config` to both arms. `--bare` is not used, because it also disables plugin hooks (Kilamu's included) and accepts only API-key auth.
+  - **Unverified:** whether this drops user-enabled plugins, and whether the global CLAUDE.md still loads. `claude plugin list` ignores these flags, so it cannot show this.
+  - **Evidence:** each trial now records the `plugins` and MCP server count from its session's `system/init` event.
+- **Engagement.** Each trial records Kilamu CLI calls, Kilamu skill invocations and Agent/Task calls made by the main agent, parsed from `--output-format stream-json`. The report shows "Kilamu engaged" per cell.
+
+Planned run: `--runs 5 --isolate`, 7 tasks × 5 × 2 = 70 trials on `sonnet`. The first run's per-trial cost suggests about 9–20 USD (ESTIMATED). It needs the founder's go-ahead.
 
 No savings percentage versus plain Claude Code is claimed.

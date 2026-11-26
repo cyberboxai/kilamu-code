@@ -4,10 +4,12 @@ All notable changes follow [Keep a Changelog](https://keepachangelog.com/) and S
 
 ## [Unreleased]
 ### Added
+- A/B harness v2: 4 new fixtures (`schema-rename`, `security-fix`, `log-triage`, `multi-feature`), plus reference solutions for all 7 that tests prove solvable. Also new: seeded arm-order shuffling (`--seed`), `--isolate`, per-trial loaded plugins and Kilamu engagement from `stream-json`.
 - First A/B benchmark run against plain Claude Code (`docs/benchmarks/ab-2026-11-26-07-11-19.{json,md}`). Results and caveats are in `docs/COST_ENGINE.md`.
 - `repository` and `homepage` in the plugin manifest. The README install instructions point at `cyberboxai/kilamu-code`.
 
 ### Fixed
+- The A/B harness copies only a fixture's git-visible files, so ignored local state no longer leaks into trials. The test-tamper hash now covers nested directories.
 - `scripts/ab-bench.ts` records the output directory relative to the repository, so result files do not leak absolute local paths.
 
 ## [0.1.0] — 2026-11-25
