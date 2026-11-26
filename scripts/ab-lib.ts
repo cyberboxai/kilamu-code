@@ -179,3 +179,26 @@ export function checkArmPlugins(a: string[] | null, b: string[] | null): string 
   if (extraB.length !== 1 || !isKilamu(extraB[0]!)) return `arm B must add exactly Kilamu to arm A's plugins; it adds: ${extraB.join(', ') || 'nothing'}`;
   return null;
 }
+
+/** Claude Code variables a trial may inherit: config location and credentials/provider selection only. */
+const CLAUDE_ENV_KEEP = new Set(['CLAUDE_CONFIG_DIR', 'CLAUDE_CODE_OAUTH_TOKEN', 'CLAUDE_CODE_USE_BEDROCK', 'CLAUDE_CODE_USE_VERTEX', 'CLAUDE_CODE_USE_FOUNDRY']);
+
+/**
+ * Environment for a trial session. When the harness itself runs inside Claude Code, the parent's
+ * session identity (CLAUDECODE, CLAUDE_CODE_SESSION_ID, messaging socket/token, child-session markers),
+ * feature flags and any KILAMU_* variables must not reach either arm. PATH entries inside the
+ * repository are dropped so no arm finds the repo's `bin/kilamu` or learns the repository path.
+ */
+export function trialEnv(base: NodeJS.ProcessEnv, repo: string): NodeJS.ProcessEnv {
+  const env: NodeJS.ProcessEnv = {};
+  for (const [k, v] of Object.entries(base)) {
+    if (k.startsWith('KILAMU_')) continue;
+    if ((k === 'CLAUDECODE' || k.startsWith('CLAUDE_')) && !CLAUDE_ENV_KEEP.has(k)) continue;
+    env[k] = v;
+  }
+  if (base.PATH !== undefined) {
+    const inRepo = (p: string): boolean => p === repo || p.startsWith(`${repo}${sep}`);
+    env.PATH = base.PATH.split(':').filter((p) => p && !inRepo(p)).join(':');
+  }
+  return env;
+}

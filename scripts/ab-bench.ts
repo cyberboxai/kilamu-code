@@ -9,6 +9,8 @@
  *    `kilamu init` in the trial project (the normal install experience).
  *    The plugin dir is a temp copy of the plugin's own files only, so arm B
  *    cannot discover the repository (and its reference solutions) from it.
+ *  - Both arms get a scrubbed environment (`trialEnv`): no parent Claude Code
+ *    session identity, flags or KILAMU_* variables, and no repo paths on PATH.
  *  - Each trial runs in a fresh temp copy (git-initialized) of the fixture's
  *    tracked files only — ignored local state never leaks into a trial.
  *  - Arm order is shuffled per (run, task) from a recorded seed (`--seed`).
@@ -39,7 +41,7 @@ import { randomInt } from 'node:crypto';
 import { mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, relative, resolve } from 'node:path';
-import { checkArmPlugins, copyFiles, engaged, hashTree, listGitVisible, parseStream, prng, shuffle, totalTokens } from './ab-lib.ts';
+import { checkArmPlugins, copyFiles, engaged, hashTree, listGitVisible, parseStream, prng, shuffle, totalTokens, trialEnv } from './ab-lib.ts';
 
 const REPO = resolve(import.meta.dirname, '..');
 const FIXTURES = join(REPO, 'tests', 'fixtures', 'ab');
@@ -230,7 +232,7 @@ function report(trials: Trial[], o: Options, startedAt: string): string {
     '## Caveats',
     `- Small sample (${o.runs} run(s) per cell): treat differences as indicative, not significant.`,
     o.isolate
-      ? '- `--isolate`: both arms load only project and local settings (no user settings, so no user-enabled plugins or user hooks) and no MCP servers. User memory (global CLAUDE.md) may still load in both arms. The per-trial `plugins` field records what each session actually loaded.'
+      ? '- `--isolate`: both arms are asked to load only project and local settings and no MCP servers. The harness enforces that arm B loads exactly arm A\'s plugins plus Kilamu; it does not prove that no user-level plugin loaded in both. The per-trial `plugins` field records what each session actually loaded. User memory (global CLAUDE.md) may still load in both arms.'
       : '- Both arms load the same user-level Claude Code configuration (global CLAUDE.md, other enabled plugins); only `--plugin-dir kilamu` differs.',
     '- "Kilamu engaged" = the main agent called the `kilamu` CLI, a Kilamu skill or a Kilamu agent at least once; "subagent calls" counts all Agent/Task tool calls by the main agent.',
     `- Token totals come from \`modelUsage\` (all models, including subagents) when present, else from \`usage\` (main loop only): ${[...new Set(trials.map((t) => t.tokenSource ?? 'none'))].join(', ')}.`,
@@ -246,9 +248,7 @@ async function main(): Promise<void> {
   const startedAt = new Date().toISOString();
   // Isolated Kilamu user config (trust records) for arm B trial projects.
   const cfg = mkdtempSync(join(tmpdir(), 'kilamu-ab-cfg-'));
-  const env: NodeJS.ProcessEnv = { ...process.env, KILAMU_CONFIG_HOME: cfg, NO_COLOR: '1' };
-  delete env.KILAMU_DATA_DIR;
-  delete env.KILAMU_PROJECT_DIR;
+  const env: NodeJS.ProcessEnv = { ...trialEnv(process.env, REPO), KILAMU_CONFIG_HOME: cfg, NO_COLOR: '1' };
   const trials: Trial[] = [];
   const rand = prng(o.seed);
   const plugin = stagePlugin();
@@ -307,6 +307,7 @@ async function main(): Promise<void> {
   if (aborted) md = `> **ABORTED** after ${trials.length} trial(s): ${aborted}\n\n${md}`;
   if (o.dryRun) {
     console.log(`\n${md}`);
+    if (aborted) process.exitCode = 1;
     return;
   }
   mkdirSync(o.out, { recursive: true });

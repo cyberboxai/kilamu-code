@@ -47,7 +47,9 @@ describe('A/B fixtures', () => {
     it('ships every file and directory its TASK.md refers to', () => {
       const files = listGitVisible(REPO, join(FIXTURES, task));
       const text = readFileSync(join(FIXTURES, task, 'TASK.md'), 'utf8');
-      const refs = [...text.matchAll(/(?:^|[\s`(])((?:[\w.-]+\/)+[\w.-]*)/g)].map((m) => m[1]!.replace(/[.,:;]+$/, ''));
+      const refs = [...text.matchAll(/(?:^|[\s`(*"'])((?:[\w.-]+\/)+[\w.-]*)/g)]
+        .map((m) => m[1]!.replace(/^\.\//, '').replace(/[.,:;]+$/, ''))
+        .filter((r) => r !== '');
       expect(refs.length, 'TASK.md should name at least one path').toBeGreaterThan(0);
       const missing = refs.filter((r) => (r.endsWith('/') ? !files.some((f) => f.startsWith(r)) : !files.includes(r)));
       expect(missing, 'paths named in TASK.md but not shipped (ignored by .gitignore?)').toEqual([]);

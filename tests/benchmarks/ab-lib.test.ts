@@ -3,7 +3,7 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
-import { checkArmPlugins, copyFiles, engaged, hashTree, listGitVisible, parseStream, prng, shuffle, totalTokens } from '../../scripts/ab-lib.ts';
+import { checkArmPlugins, copyFiles, engaged, hashTree, listGitVisible, parseStream, prng, shuffle, totalTokens, trialEnv } from '../../scripts/ab-lib.ts';
 
 const dirs: string[] = [];
 const tmp = (): string => {
@@ -206,5 +206,19 @@ describe('checkArmPlugins', () => {
     expect(checkArmPlugins(['omc'], ['kilamu-code'])).toMatch(/missing plugins.*omc/);
     expect(checkArmPlugins([], ['kilamu-code', 'omc'])).toMatch(/exactly Kilamu/);
     expect(checkArmPlugins([], [])).toMatch(/adds: nothing/);
+  });
+});
+
+describe('trialEnv', () => {
+  it('drops the parent session identity, flags and KILAMU_* but keeps auth/config and ordinary variables', () => {
+    const env = trialEnv({
+      HOME: '/h', LANG: 'C', CLAUDECODE: '1', CLAUDE_CODE_SESSION_ID: 's', CLAUDE_CODE_MESSAGING_TOKEN: 't',
+      CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS: '1', CLAUDE_PLUGIN_ROOT: '/r', KILAMU_SESSION_ID: 'k', KILAMU_DATA_DIR: '/d',
+      CLAUDE_CONFIG_DIR: '/c', CLAUDE_CODE_OAUTH_TOKEN: 'o', ANTHROPIC_API_KEY: 'a',
+    }, '/repo');
+    expect(env).toEqual({ HOME: '/h', LANG: 'C', CLAUDE_CONFIG_DIR: '/c', CLAUDE_CODE_OAUTH_TOKEN: 'o', ANTHROPIC_API_KEY: 'a' });
+  });
+  it('removes PATH entries inside the repository only', () => {
+    expect(trialEnv({ PATH: '/usr/bin:/repo/bin:/repo:/repo-other/bin::/bin' }, '/repo').PATH).toBe('/usr/bin:/repo-other/bin:/bin');
   });
 });
