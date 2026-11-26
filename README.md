@@ -45,7 +45,7 @@ claude --plugin-dir /path/to/kilamu-code          # try it for one session
 From a git repository that hosts this marketplace (`.claude-plugin/marketplace.json`):
 
 ```bash
-claude plugin marketplace add <owner>/<repo>
+claude plugin marketplace add cyberboxai/kilamu-code
 claude plugin install kilamu-code@kilamu-code-marketplace
 ```
 

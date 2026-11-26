@@ -6,6 +6,8 @@
   "author": {
     "name": "Wilker Flores"
   },
+  "homepage": "https://github.com/cyberboxai/kilamu-code",
+  "repository": "https://github.com/cyberboxai/kilamu-code",
   "license": "MIT",
   "keywords": [
     "orchestration",
