@@ -1,0 +1,1 @@
+Rename the money helper `calcTotal` to `computeTotal` across the codebase (definition and every caller), without changing behaviour. No source file may still mention `calcTotal`. The tests in test/ define the expected result.

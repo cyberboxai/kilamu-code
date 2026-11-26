@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+# Kilamu Code CLI launcher. Runs the TypeScript sources directly with Node's
+# native type stripping (Node >= 22.18): no build step, no runtime dependencies.
+set -e
+SELF="$0"
+if command -v readlink >/dev/null 2>&1; then
+  RESOLVED="$(readlink -f "$SELF" 2>/dev/null || true)"
+  [ -n "$RESOLVED" ] && SELF="$RESOLVED"
+fi
+ROOT="$(cd "$(dirname "$SELF")/.." && pwd)"
+if ! command -v node >/dev/null 2>&1; then
+  echo "kilamu: Node.js >= 22.18 is required but 'node' was not found on PATH" >&2
+  exit 127
+fi
+VER="$(node -p 'process.versions.node')"
+MAJOR="${VER%%.*}"; REST="${VER#*.}"; MINOR="${REST%%.*}"
+if [ "$MAJOR" -lt 22 ] || { [ "$MAJOR" -eq 22 ] && [ "$MINOR" -lt 18 ]; }; then
+  echo "kilamu: Node.js >= 22.18 is required (found $VER)" >&2
+  exit 1
+fi
+exec node --disable-warning=ExperimentalWarning "$ROOT/src/cli.ts" "$@"
