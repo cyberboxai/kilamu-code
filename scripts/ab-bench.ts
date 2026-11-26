@@ -26,7 +26,7 @@ import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { cpSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join, resolve } from 'node:path';
+import { join, relative, resolve } from 'node:path';
 
 const REPO = resolve(import.meta.dirname, '..');
 const FIXTURES = join(REPO, 'tests', 'fixtures', 'ab');
@@ -241,7 +241,7 @@ async function main(): Promise<void> {
   }
   mkdirSync(o.out, { recursive: true });
   const stamp = startedAt.slice(0, 19).replace(/[:T]/g, '-');
-  writeFileSync(join(o.out, `ab-${stamp}.json`), `${JSON.stringify({ options: o, startedAt, trials }, null, 2)}\n`);
+  writeFileSync(join(o.out, `ab-${stamp}.json`), `${JSON.stringify({ options: { ...o, out: relative(REPO, o.out) || '.' }, startedAt, trials }, null, 2)}\n`);
   writeFileSync(join(o.out, `ab-${stamp}.md`), `${md}\n`);
   console.log(`\n${md}\n\nWrote ${join(o.out, `ab-${stamp}.{json,md}`)}`);
 }
