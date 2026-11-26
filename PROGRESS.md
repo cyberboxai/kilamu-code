@@ -1,6 +1,6 @@
 # Kilamu Code — Progress Report (0.1.0)
 
-Last updated: 2026-11-25 · Lead: Claude (founding engineering team) · Founder: Wilker Flores
+Last updated: 2026-11-26 · Lead: Claude (founding engineering team) · Founder: Wilker Flores
 
 ## Verification evidence (fresh runs)
 | Check | Result |
@@ -11,6 +11,7 @@ Last updated: 2026-11-25 · Lead: Claude (founding engineering team) · Founder:
 | `claude --plugin-dir . plugin list` / `plugin details` | ✔ loaded. 6 skills, 6 agents, 5 hooks; ~1,085 always-on tokens (Claude Code's estimate) |
 | Live headless session (`claude -p --model haiku --plugin-dir .`) | SessionStart injected `[Kilamu Code] Active execution …`; `kilamu version` ran as a bare command through the plugin's `bin/` |
 | Local benchmarks (`npm run bench`) | see `docs/COST_ENGINE.md` |
+| A/B benchmark vs plain Claude Code (`scripts/ab-bench.ts`, sonnet, 3 tasks × 3 runs) | 18/18 trials verified (9/9 per arm). Kilamu costs +2.5% to +3.7% more on small tasks (always-on overhead). No subagents were spawned in either arm. No savings claimed. See `docs/COST_ENGINE.md` |
 | Dogfood execution on this repo | `ex_0mwwme603e99d9f7829`: SINGLE mode, task B1 VERIFIED on 4/4 criteria (`npm run typecheck`, 2× file_contains, the benchmark run); evidence artifacts recorded |
 
 ## Feature classification
@@ -58,7 +59,7 @@ These have automated tests, and where noted, live or dogfood evidence.
 - **Tool intelligence.** Discovery covers project `.mcp.json` only, by name and transport. Recommendations come from keyword heuristics. A result cache API exists but is unused by commands.
 
 ### PLANNED
-- A/B model benchmark against plain Claude Code (protocol in `docs/COST_ENGINE.md`; needs consent because it spends usage).
+- A/B benchmark at full protocol scale: 6 task kinds, N ≥ 5, randomised arm order, isolated user config. A first, smaller run is recorded in `docs/COST_ENGINE.md`.
 - Tree-sitter parsers.
 - Worktree isolation for TEAM writers.
 - Re-planning of active executions.
@@ -96,6 +97,12 @@ Median of 5 runs on this repository:
 - **Incremental re-index:** about 0.3 s.
 - **Context packs:** a 6K-token pack carries about 25% of the tokens of the naive "read every contributing file" baseline (ESTIMATED). Sufficiency was not measured.
 - **Log compression:** 3/3 synthetic failure logs had the failure extracted, at ratios from 0.003 to 0.066.
+
+## A/B benchmark (model calls, 2026-11-26)
+- 3 fixture tasks × 3 runs × 2 arms on `sonnet`. Both arms verified 9/9.
+- Small tasks (feature, refactor): Kilamu is **worse**, at +2.5% and +3.7% median cost and about +2K tokens per session of always-on overhead.
+- Bugfix: Kilamu has −1.6% median cost, but the spread is dominated by one arm-A outlier with a large prompt-cache write.
+- Kilamu's orchestration never engaged: 0 subagents in either arm.
 
 No savings percentage versus plain Claude Code is claimed. See `docs/COST_ENGINE.md`.
 

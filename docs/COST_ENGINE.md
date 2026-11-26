@@ -61,19 +61,40 @@ How to read these results:
 - **Compression.** All three synthetic failure logs had their failure extracted. For repetitive tsc output the summary is larger (ratio 0.066) because distinct file:line findings are kept, up to 25. Without an exit code, a generic build log gets the honest status `unknown`.
 - **Indexing.** An incremental re-index of an unchanged repository takes about 0.3 s.
 
-## A/B model benchmark (designed, NOT executed)
-Comparing standard Claude Code with Claude Code plus Kilamu spends real model usage. It therefore needs the founder's explicit go-ahead and was **not run** for 0.1.0. The protocol:
+## A/B model benchmark (first run: 2026-11-26)
+Comparing standard Claude Code with Claude Code plus Kilamu spends real model usage. The founder approved one run. The harness is `scripts/ab-bench.ts`. Raw per-trial data: `docs/benchmarks/ab-2026-11-26-07-11-19.json`. Generated report: `docs/benchmarks/ab-2026-11-26-07-11-19.md`.
 
-1. **Repository snapshot.** Use a fixed snapshot (a tagged fixture repository) with 6 tasks of the kinds listed in the directive (§22): a feature, a multi-file refactor, debugging, schema investigation, a security review, and log triage.
-2. **Two arms, identical settings.**
-   - Arm A: `claude -p --model sonnet`.
-   - Arm B: the same command plus `--plugin-dir kilamu-code`.
-   - Both arms use the same allowed tools, the same prompt and the same acceptance script.
-3. **Trials.** Run N ≥ 5 trials per task per arm. Record:
-   - tokens and cost, from `--output-format json` usage;
-   - wall time;
-   - tool-call count;
-   - verification pass/fail, using the same acceptance script in both arms.
-4. **Reporting.** Report the median and IQR per task, together with completion rate and **cost per verified task**. Include the tasks where Kilamu is worse; small single-file tasks are expected to be worse, because of the always-on overhead.
+### Protocol as run
+- **Arms.** A: `claude -p --model sonnet --output-format json`. B: the same command plus `--plugin-dir <kilamu>`, with `kilamu init` run in the trial project. Both arms get the same prompt, allowed tools and max turns (40).
+- **Trials.** Each trial gets a fresh, git-initialized temp copy of the fixture.
+- **Acceptance.** `node --test` exits 0 **and** the fixture's test files are byte-identical.
+- **Metrics.** MEASURED by Claude Code (`total_cost_usd` is the client-side list price, not a bill).
 
-No savings percentage is claimed until this benchmark has been run.
+**Deviation from the designed protocol:** this run used **3 tasks × 3 runs per arm** (18 trials). The design called for 6 task kinds and N ≥ 5. Schema investigation, security review and log triage fixtures do not exist yet.
+
+### Results (medians, [Q1–Q3])
+| task | arm | verified | cost USD | total tokens | turns | duration s |
+|---|---|---|---|---|---|---|
+| bugfix-pagination | A-plain | 3/3 | 0.1296 [0.1279–0.1557] | 190,239 | 8 | 31.6 |
+| bugfix-pagination | B-kilamu | 3/3 | 0.1275 [0.1249–0.1306] | 153,853 | 7 | 28.7 |
+| feature-slugify | A-plain | 3/3 | 0.1112 [0.1109–0.1112] | 111,971 | 3 | 11.9 |
+| feature-slugify | B-kilamu | 3/3 | 0.1140 [0.1139–0.1141] | 113,902 | 3 | 17.1 |
+| refactor-rename | A-plain | 3/3 | 0.1095 [0.1095–0.1123] | 111,641 | 3 | 13.8 |
+| refactor-rename | B-kilamu | 3/3 | 0.1135 [0.1128–0.1136] | 113,926 | 4 | 11.7 |
+
+Totals: both arms verified 9/9. Cost per verified task: A 0.1227 USD, B 0.1183 USD.
+
+### Interpretation
+- **Correctness: no difference.** Both arms verified every trial. No trial tampered with tests, errored or hit a permission denial.
+- **Small tasks: Kilamu is worse.** On `feature-slugify` and `refactor-rename`, B costs **+2.5%** and **+3.7%** more (median). It uses about **+1.9K–2.3K tokens per session**, which is Kilamu's always-on overhead (plugin listing plus SessionStart orientation). This matches the expected cost of the always-on layer. B was also slower on `feature-slugify` (17.1 s vs 11.9 s, median).
+- **Bugfix: B is slightly cheaper, but not significantly.** The median cost is −1.6% and median tokens are −19%. But the spread comes mostly from arm A's run 1 (0.1818 USD, with a large prompt-cache write). Run order and prompt-cache warmth are a confound at this sample size.
+- **The total "−3.6% cost per verified task" for B is not a savings claim.** It is within noise and driven by that one A outlier.
+- **Kilamu did not engage.** No trial in either arm spawned a subagent. On these small single-agent tasks, arm B measured Kilamu's overhead only, not its orchestration, context packs or verification.
+- **Confound.** Both arms load the same user-level configuration (global CLAUDE.md, other enabled plugins). Only `--plugin-dir` differs.
+
+### What is still needed before any savings claim
+1. Fixtures for the remaining task kinds (schema investigation, security review, log triage), plus at least one multi-file task large enough to trigger SUBAGENT mode.
+2. N ≥ 5 runs per cell, with arm order randomised per run.
+3. A clean user configuration for both arms, for example an isolated `CLAUDE_CONFIG_DIR`.
+
+No savings percentage versus plain Claude Code is claimed.

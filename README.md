@@ -121,7 +121,7 @@ Version 0.1.0 is a functional MVP. [`PROGRESS.md`](PROGRESS.md) classifies every
 - Code parsing is heuristic: regex and line scanners, not Tree-sitter yet.
 - Per-agent token usage is not exposed by Claude Code, so Kilamu reports it as UNAVAILABLE.
 
-Kilamu does not claim percentage savings. The benchmark harness is described in [`docs/COST_ENGINE.md`](docs/COST_ENGINE.md).
+Kilamu does not claim percentage savings. A first A/B run against plain Claude Code (3 small tasks × 3 runs) found equal correctness and a small always-on overhead (+2.5% to +3.7% cost on small tasks). Method, results and caveats are in [`docs/COST_ENGINE.md`](docs/COST_ENGINE.md).
 
 ## Development
 

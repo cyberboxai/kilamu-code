@@ -2,6 +2,14 @@
 
 All notable changes follow [Keep a Changelog](https://keepachangelog.com/) and SemVer.
 
+## [Unreleased]
+### Added
+- First A/B benchmark run against plain Claude Code (`docs/benchmarks/ab-2026-11-26-07-11-19.{json,md}`). Results and caveats are in `docs/COST_ENGINE.md`.
+- `repository` and `homepage` in the plugin manifest. The README install instructions point at `cyberboxai/kilamu-code`.
+
+### Fixed
+- `scripts/ab-bench.ts` records the output directory relative to the repository, so result files do not leak absolute local paths.
+
 ## [0.1.0] — 2026-11-25
 ### Fixed before release (independent architecture, security and code reviews)
 - **Verification command policy.** The program allowlist became argv templates per runner. Arguments are confined to the project, plans are checked at creation, and the policy can only be widened from user scope. Timeouts kill the whole process group.
