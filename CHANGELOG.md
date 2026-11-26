@@ -4,6 +4,7 @@ All notable changes follow [Keep a Changelog](https://keepachangelog.com/) and S
 
 ## [Unreleased]
 ### Added
+- GitHub Actions CI: typecheck and tests on Linux and macOS × Node 22 and 24, plus `claude plugin validate`. Actions are SHA-pinned, with a read-only token.
 - First A/B benchmark run against plain Claude Code (`docs/benchmarks/ab-2026-11-26-07-11-19.{json,md}`). Results and caveats are in `docs/COST_ENGINE.md`.
 - `repository` and `homepage` in the plugin manifest. The README install instructions point at `cyberboxai/kilamu-code`.
 
