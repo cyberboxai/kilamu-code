@@ -6,3 +6,5 @@ coverage/
 .env
 .env.*
 !.env.example
+# A/B fixture data: the log-triage task needs its log
+!tests/fixtures/ab/**/*.log

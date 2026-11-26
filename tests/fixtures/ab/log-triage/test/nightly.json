@@ -1,0 +1,2002 @@
+[
+ {
+  "id": "r-0001",
+  "region": "LDA",
+  "amount": "17,669.41"
+ },
+ {
+  "id": "r-0002",
+  "region": "BGU",
+  "amount": "22,456.98"
+ },
+ {
+  "id": "r-0003",
+  "region": "BGU",
+  "amount": "316.05"
+ },
+ {
+  "id": "r-0004",
+  "region": "HUA",
+  "amount": "830.23"
+ },
+ {
+  "id": "r-0005",
+  "region": "HUA",
+  "amount": "986.33"
+ },
+ {
+  "id": "r-0006",
+  "region": "XK",
+  "amount": "42,240.55"
+ },
+ {
+  "id": "r-0007",
+  "region": "BGU",
+  "amount": "-500.00"
+ },
+ {
+  "id": "r-0008",
+  "region": "CAB",
+  "amount": "426.72"
+ },
+ {
+  "id": "r-0009",
+  "region": "LDA",
+  "amount": "4,161.44"
+ },
+ {
+  "id": "r-0010",
+  "region": "HUA",
+  "amount": "959.84"
+ },
+ {
+  "id": "r-0011",
+  "region": "CAB",
+  "amount": "300.86"
+ },
+ {
+  "id": "r-0012",
+  "region": "CAB",
+  "amount": "810.32"
+ },
+ {
+  "id": "r-0013",
+  "region": "LDA",
+  "amount": "142.46"
+ },
+ {
+  "id": "r-0014",
+  "region": "LDA",
+  "amount": "905.75"
+ },
+ {
+  "id": "r-0015",
+  "region": "XK",
+  "amount": "16,129.23"
+ },
+ {
+  "id": "r-0016",
+  "region": "LDA",
+  "amount": "919.27"
+ },
+ {
+  "id": "r-0017",
+  "region": "XK",
+  "amount": "311.94"
+ },
+ {
+  "id": "r-0018",
+  "region": "CAB",
+  "amount": "427.25"
+ },
+ {
+  "id": "r-0019",
+  "region": "HUA",
+  "amount": "18.66"
+ },
+ {
+  "id": "r-0020",
+  "region": "XK",
+  "amount": "555.65"
+ },
+ {
+  "id": "r-0021",
+  "region": "XK",
+  "amount": "805.35"
+ },
+ {
+  "id": "r-0022",
+  "region": "BGU",
+  "amount": "797.58"
+ },
+ {
+  "id": "r-0023",
+  "region": "BGU",
+  "amount": "916.04"
+ },
+ {
+  "id": "r-0024",
+  "region": "HUA",
+  "amount": "30.42"
+ },
+ {
+  "id": "r-0025",
+  "region": "LDA",
+  "amount": "41.86"
+ },
+ {
+  "id": "r-0026",
+  "region": "XK",
+  "amount": "634.18"
+ },
+ {
+  "id": "r-0027",
+  "region": "XK",
+  "amount": "-500.00"
+ },
+ {
+  "id": "r-0028",
+  "region": "CAB",
+  "amount": "1,076.63"
+ },
+ {
+  "id": "r-0029",
+  "region": "LDA",
+  "amount": "824.14"
+ },
+ {
+  "id": "r-0030",
+  "region": "CAB",
+  "amount": "28.31"
+ },
+ {
+  "id": "r-0031",
+  "region": "XK",
+  "amount": "35.74"
+ },
+ {
+  "id": "r-0032",
+  "region": "LDA",
+  "amount": "151.05"
+ },
+ {
+  "id": "r-0033",
+  "region": "BGU",
+  "amount": "489.92"
+ },
+ {
+  "id": "r-0034",
+  "region": "HUA",
+  "amount": "646.67"
+ },
+ {
+  "id": "r-0035",
+  "region": "XK",
+  "amount": "99.91"
+ },
+ {
+  "id": "r-0036",
+  "region": "HUA",
+  "amount": "540.05"
+ },
+ {
+  "id": "r-0037",
+  "region": "LDA",
+  "amount": "11,859.23"
+ },
+ {
+  "id": "r-0038",
+  "region": "BGU",
+  "amount": "48,125.93"
+ },
+ {
+  "id": "r-0039",
+  "region": "LDA",
+  "amount": "98.65"
+ },
+ {
+  "id": "r-0040",
+  "region": "CAB",
+  "amount": "580.27"
+ },
+ {
+  "id": "r-0041",
+  "region": "HUA",
+  "amount": "653.76"
+ },
+ {
+  "id": "r-0042",
+  "region": "BGU",
+  "amount": "675.95"
+ },
+ {
+  "id": "r-0043",
+  "region": "LDA",
+  "amount": "357.64"
+ },
+ {
+  "id": "r-0044",
+  "region": "BGU",
+  "amount": "46,087.48"
+ },
+ {
+  "id": "r-0045",
+  "region": "XK",
+  "amount": "1,836.81"
+ },
+ {
+  "id": "r-0046",
+  "region": "CAB",
+  "amount": "299.88"
+ },
+ {
+  "id": "r-0047",
+  "region": "XK",
+  "amount": "-500.00"
+ },
+ {
+  "id": "r-0048",
+  "region": "XK",
+  "amount": "17,908.25"
+ },
+ {
+  "id": "r-0049",
+  "region": "BGU",
+  "amount": "438.42"
+ },
+ {
+  "id": "r-0050",
+  "region": "HUA",
+  "amount": "488.17"
+ },
+ {
+  "id": "r-0051",
+  "region": "BGU",
+  "amount": "500.29"
+ },
+ {
+  "id": "r-0052",
+  "region": "CAB",
+  "amount": "978.33"
+ },
+ {
+  "id": "r-0053",
+  "region": "LDA",
+  "amount": "966.59"
+ },
+ {
+  "id": "r-0054",
+  "region": "CAB",
+  "amount": "107.48"
+ },
+ {
+  "id": "r-0055",
+  "region": "LDA",
+  "amount": "711.55"
+ },
+ {
+  "id": "r-0056",
+  "region": "CAB",
+  "amount": "405.97"
+ },
+ {
+  "id": "r-0057",
+  "region": "CAB",
+  "amount": "18,078.51"
+ },
+ {
+  "id": "r-0058",
+  "region": "BGU",
+  "amount": "399.90"
+ },
+ {
+  "id": "r-0059",
+  "region": "HUA",
+  "amount": "870.76"
+ },
+ {
+  "id": "r-0060",
+  "region": "HUA",
+  "amount": "858.24"
+ },
+ {
+  "id": "r-0061",
+  "region": "BGU",
+  "amount": "70.25"
+ },
+ {
+  "id": "r-0062",
+  "region": "LDA",
+  "amount": "241.67"
+ },
+ {
+  "id": "r-0063",
+  "region": "BGU",
+  "amount": "25,633.50"
+ },
+ {
+  "id": "r-0064",
+  "region": "BGU",
+  "amount": "974.23"
+ },
+ {
+  "id": "r-0065",
+  "region": "BGU",
+  "amount": "132.48"
+ },
+ {
+  "id": "r-0066",
+  "region": "BGU",
+  "amount": "676.86"
+ },
+ {
+  "id": "r-0067",
+  "region": "HUA",
+  "amount": "704.39"
+ },
+ {
+  "id": "r-0068",
+  "region": "HUA",
+  "amount": "489.18"
+ },
+ {
+  "id": "r-0069",
+  "region": "LDA",
+  "amount": "1,872.54"
+ },
+ {
+  "id": "r-0070",
+  "region": "XK",
+  "amount": "906.24"
+ },
+ {
+  "id": "r-0071",
+  "region": "XK",
+  "amount": "593.74"
+ },
+ {
+  "id": "r-0072",
+  "region": "CAB",
+  "amount": "843.55"
+ },
+ {
+  "id": "r-0073",
+  "region": "LDA",
+  "amount": "598.19"
+ },
+ {
+  "id": "r-0074",
+  "region": "HUA",
+  "amount": "640.25"
+ },
+ {
+  "id": "r-0075",
+  "region": "HUA",
+  "amount": "11,058.96"
+ },
+ {
+  "id": "r-0076",
+  "region": "CAB",
+  "amount": "18,878.85"
+ },
+ {
+  "id": "r-0077",
+  "region": "CAB",
+  "amount": "32,193.97"
+ },
+ {
+  "id": "r-0078",
+  "region": "CAB",
+  "amount": "849.48"
+ },
+ {
+  "id": "r-0079",
+  "region": "HUA",
+  "amount": "579.67"
+ },
+ {
+  "id": "r-0080",
+  "region": "LDA",
+  "amount": "931.70"
+ },
+ {
+  "id": "r-0081",
+  "region": "XK",
+  "amount": "9,376.42"
+ },
+ {
+  "id": "r-0082",
+  "region": "XK",
+  "amount": "727.13"
+ },
+ {
+  "id": "r-0083",
+  "region": "CAB",
+  "amount": "43,259.04"
+ },
+ {
+  "id": "r-0084",
+  "region": "LDA",
+  "amount": "448.69"
+ },
+ {
+  "id": "r-0085",
+  "region": "HUA",
+  "amount": "10,318.62"
+ },
+ {
+  "id": "r-0086",
+  "region": "HUA",
+  "amount": "990.47"
+ },
+ {
+  "id": "r-0087",
+  "region": "CAB",
+  "amount": "893.86"
+ },
+ {
+  "id": "r-0088",
+  "region": "CAB",
+  "amount": "870.34"
+ },
+ {
+  "id": "r-0089",
+  "region": "LDA",
+  "amount": "11.99"
+ },
+ {
+  "id": "r-0090",
+  "region": "LDA",
+  "amount": "48,776.69"
+ },
+ {
+  "id": "r-0091",
+  "region": "CAB",
+  "amount": "37,868.06"
+ },
+ {
+  "id": "r-0092",
+  "region": "LDA",
+  "amount": "10,996.42"
+ },
+ {
+  "id": "r-0093",
+  "region": "CAB",
+  "amount": "21,964.32"
+ },
+ {
+  "id": "r-0094",
+  "region": "LDA",
+  "amount": "22,861.53"
+ },
+ {
+  "id": "r-0095",
+  "region": "HUA",
+  "amount": "4,270.08"
+ },
+ {
+  "id": "r-0096",
+  "region": "CAB",
+  "amount": "959.72"
+ },
+ {
+  "id": "r-0097",
+  "region": "HUA",
+  "amount": "212.97"
+ },
+ {
+  "id": "r-0098",
+  "region": "XK",
+  "amount": "328.28"
+ },
+ {
+  "id": "r-0099",
+  "region": "CAB",
+  "amount": "31.69"
+ },
+ {
+  "id": "r-0100",
+  "region": "XK",
+  "amount": "37,550.59"
+ },
+ {
+  "id": "r-0101",
+  "region": "HUA",
+  "amount": "472.36"
+ },
+ {
+  "id": "r-0102",
+  "region": "LDA",
+  "amount": "-500.00"
+ },
+ {
+  "id": "r-0103",
+  "region": "BGU",
+  "amount": "44,094.31"
+ },
+ {
+  "id": "r-0104",
+  "region": "LDA",
+  "amount": "38,500.20"
+ },
+ {
+  "id": "r-0105",
+  "region": "LDA",
+  "amount": "162.00"
+ },
+ {
+  "id": "r-0106",
+  "region": "BGU",
+  "amount": "366.24"
+ },
+ {
+  "id": "r-0107",
+  "region": "HUA",
+  "amount": "766.34"
+ },
+ {
+  "id": "r-0108",
+  "region": "LDA",
+  "amount": "49,943.22"
+ },
+ {
+  "id": "r-0109",
+  "region": "XK",
+  "amount": "684.01"
+ },
+ {
+  "id": "r-0110",
+  "region": "LDA",
+  "amount": "386.73"
+ },
+ {
+  "id": "r-0111",
+  "region": "CAB",
+  "amount": "718.93"
+ },
+ {
+  "id": "r-0112",
+  "region": "CAB",
+  "amount": "15,664.04"
+ },
+ {
+  "id": "r-0113",
+  "region": "LDA",
+  "amount": "646.25"
+ },
+ {
+  "id": "r-0114",
+  "region": "XK",
+  "amount": "221.14"
+ },
+ {
+  "id": "r-0115",
+  "region": "BGU",
+  "amount": "948.49"
+ },
+ {
+  "id": "r-0116",
+  "region": "CAB",
+  "amount": "853.87"
+ },
+ {
+  "id": "r-0117",
+  "region": "LDA",
+  "amount": "849.19"
+ },
+ {
+  "id": "r-0118",
+  "region": "BGU",
+  "amount": "960.17"
+ },
+ {
+  "id": "r-0119",
+  "region": "BGU",
+  "amount": "803.81"
+ },
+ {
+  "id": "r-0120",
+  "region": "LDA",
+  "amount": "600.62"
+ },
+ {
+  "id": "r-0121",
+  "region": "CAB",
+  "amount": "93.42"
+ },
+ {
+  "id": "r-0122",
+  "region": "XK",
+  "amount": "492.48"
+ },
+ {
+  "id": "r-0123",
+  "region": "CAB",
+  "amount": "76.52"
+ },
+ {
+  "id": "r-0124",
+  "region": "HUA",
+  "amount": "972.06"
+ },
+ {
+  "id": "r-0125",
+  "region": "HUA",
+  "amount": "-500.00"
+ },
+ {
+  "id": "r-0126",
+  "region": "HUA",
+  "amount": "-500.00"
+ },
+ {
+  "id": "r-0127",
+  "region": "CAB",
+  "amount": "192.78"
+ },
+ {
+  "id": "r-0128",
+  "region": "BGU",
+  "amount": "581.42"
+ },
+ {
+  "id": "r-0129",
+  "region": "HUA",
+  "amount": "45,079.04"
+ },
+ {
+  "id": "r-0130",
+  "region": "BGU",
+  "amount": "864.24"
+ },
+ {
+  "id": "r-0131",
+  "region": "HUA",
+  "amount": "46,431.20"
+ },
+ {
+  "id": "r-0132",
+  "region": "HUA",
+  "amount": "156.39"
+ },
+ {
+  "id": "r-0133",
+  "region": "LDA",
+  "amount": "-500.00"
+ },
+ {
+  "id": "r-0134",
+  "region": "LDA",
+  "amount": "536.98"
+ },
+ {
+  "id": "r-0135",
+  "region": "XK",
+  "amount": "762.71"
+ },
+ {
+  "id": "r-0136",
+  "region": "BGU",
+  "amount": "775.38"
+ },
+ {
+  "id": "r-0137",
+  "region": "HUA",
+  "amount": "4,823.97"
+ },
+ {
+  "id": "r-0138",
+  "region": "LDA",
+  "amount": "401.38"
+ },
+ {
+  "id": "r-0139",
+  "region": "LDA",
+  "amount": "-278.97"
+ },
+ {
+  "id": "r-0140",
+  "region": "LDA",
+  "amount": "629.23"
+ },
+ {
+  "id": "r-0141",
+  "region": "XK",
+  "amount": "711.29"
+ },
+ {
+  "id": "r-0142",
+  "region": "CAB",
+  "amount": "325.44"
+ },
+ {
+  "id": "r-0143",
+  "region": "XK",
+  "amount": "22,804.85"
+ },
+ {
+  "id": "r-0144",
+  "region": "XK",
+  "amount": "556.62"
+ },
+ {
+  "id": "r-0145",
+  "region": "CAB",
+  "amount": "171.36"
+ },
+ {
+  "id": "r-0146",
+  "region": "HUA",
+  "amount": "4,982.29"
+ },
+ {
+  "id": "r-0147",
+  "region": "XK",
+  "amount": "130.05"
+ },
+ {
+  "id": "r-0148",
+  "region": "CAB",
+  "amount": "573.83"
+ },
+ {
+  "id": "r-0149",
+  "region": "CAB",
+  "amount": "693.37"
+ },
+ {
+  "id": "r-0150",
+  "region": "HUA",
+  "amount": "174.35"
+ },
+ {
+  "id": "r-0151",
+  "region": "CAB",
+  "amount": "248.72"
+ },
+ {
+  "id": "r-0152",
+  "region": "HUA",
+  "amount": "607.58"
+ },
+ {
+  "id": "r-0153",
+  "region": "HUA",
+  "amount": "428.13"
+ },
+ {
+  "id": "r-0154",
+  "region": "LDA",
+  "amount": "12,488.73"
+ },
+ {
+  "id": "r-0155",
+  "region": "LDA",
+  "amount": "-500.00"
+ },
+ {
+  "id": "r-0156",
+  "region": "BGU",
+  "amount": "387.27"
+ },
+ {
+  "id": "r-0157",
+  "region": "HUA",
+  "amount": "428.71"
+ },
+ {
+  "id": "r-0158",
+  "region": "XK",
+  "amount": "911.56"
+ },
+ {
+  "id": "r-0159",
+  "region": "HUA",
+  "amount": "836.41"
+ },
+ {
+  "id": "r-0160",
+  "region": "BGU",
+  "amount": "288.82"
+ },
+ {
+  "id": "r-0161",
+  "region": "BGU",
+  "amount": "497.17"
+ },
+ {
+  "id": "r-0162",
+  "region": "LDA",
+  "amount": "985.93"
+ },
+ {
+  "id": "r-0163",
+  "region": "LDA",
+  "amount": "-1.84"
+ },
+ {
+  "id": "r-0164",
+  "region": "HUA",
+  "amount": "941.17"
+ },
+ {
+  "id": "r-0165",
+  "region": "BGU",
+  "amount": "427.99"
+ },
+ {
+  "id": "r-0166",
+  "region": "LDA",
+  "amount": "571.03"
+ },
+ {
+  "id": "r-0167",
+  "region": "LDA",
+  "amount": "20,081.40"
+ },
+ {
+  "id": "r-0168",
+  "region": "CAB",
+  "amount": "579.06"
+ },
+ {
+  "id": "r-0169",
+  "region": "LDA",
+  "amount": "25,458.84"
+ },
+ {
+  "id": "r-0170",
+  "region": "LDA",
+  "amount": "573.61"
+ },
+ {
+  "id": "r-0171",
+  "region": "LDA",
+  "amount": "610.23"
+ },
+ {
+  "id": "r-0172",
+  "region": "CAB",
+  "amount": "440.05"
+ },
+ {
+  "id": "r-0173",
+  "region": "HUA",
+  "amount": "-363.35"
+ },
+ {
+  "id": "r-0174",
+  "region": "XK",
+  "amount": "120.65"
+ },
+ {
+  "id": "r-0175",
+  "region": "LDA",
+  "amount": "-500.00"
+ },
+ {
+  "id": "r-0176",
+  "region": "HUA",
+  "amount": "41,436.49"
+ },
+ {
+  "id": "r-0177",
+  "region": "LDA",
+  "amount": "29,262.12"
+ },
+ {
+  "id": "r-0178",
+  "region": "LDA",
+  "amount": "693.35"
+ },
+ {
+  "id": "r-0179",
+  "region": "CAB",
+  "amount": "895.96"
+ },
+ {
+  "id": "r-0180",
+  "region": "LDA",
+  "amount": "28,423.08"
+ },
+ {
+  "id": "r-0181",
+  "region": "BGU",
+  "amount": "945.37"
+ },
+ {
+  "id": "r-0182",
+  "region": "LDA",
+  "amount": "2,132.45"
+ },
+ {
+  "id": "r-0183",
+  "region": "XK",
+  "amount": "200.61"
+ },
+ {
+  "id": "r-0184",
+  "region": "BGU",
+  "amount": "433.74"
+ },
+ {
+  "id": "r-0185",
+  "region": "LDA",
+  "amount": "264.41"
+ },
+ {
+  "id": "r-0186",
+  "region": "LDA",
+  "amount": "39,627.63"
+ },
+ {
+  "id": "r-0187",
+  "region": "LDA",
+  "amount": "937.03"
+ },
+ {
+  "id": "r-0188",
+  "region": "CAB",
+  "amount": "912.97"
+ },
+ {
+  "id": "r-0189",
+  "region": "LDA",
+  "amount": "971.29"
+ },
+ {
+  "id": "r-0190",
+  "region": "LDA",
+  "amount": "237.24"
+ },
+ {
+  "id": "r-0191",
+  "region": "CAB",
+  "amount": "47,315.36"
+ },
+ {
+  "id": "r-0192",
+  "region": "HUA",
+  "amount": "941.19"
+ },
+ {
+  "id": "r-0193",
+  "region": "HUA",
+  "amount": "-500.00"
+ },
+ {
+  "id": "r-0194",
+  "region": "CAB",
+  "amount": "951.86"
+ },
+ {
+  "id": "r-0195",
+  "region": "HUA",
+  "amount": "713.03"
+ },
+ {
+  "id": "r-0196",
+  "region": "HUA",
+  "amount": "819.21"
+ },
+ {
+  "id": "r-0197",
+  "region": "LDA",
+  "amount": "265.88"
+ },
+ {
+  "id": "r-0198",
+  "region": "CAB",
+  "amount": "252.51"
+ },
+ {
+  "id": "r-0199",
+  "region": "CAB",
+  "amount": "654.74"
+ },
+ {
+  "id": "r-0200",
+  "region": "LDA",
+  "amount": "44,572.09"
+ },
+ {
+  "id": "r-0201",
+  "region": "LDA",
+  "amount": "114.23"
+ },
+ {
+  "id": "r-0202",
+  "region": "HUA",
+  "amount": "175.90"
+ },
+ {
+  "id": "r-0203",
+  "region": "LDA",
+  "amount": "936.62"
+ },
+ {
+  "id": "r-0204",
+  "region": "XK",
+  "amount": "41,494.86"
+ },
+ {
+  "id": "r-0205",
+  "region": "LDA",
+  "amount": "590.26"
+ },
+ {
+  "id": "r-0206",
+  "region": "CAB",
+  "amount": "376.14"
+ },
+ {
+  "id": "r-0207",
+  "region": "LDA",
+  "amount": "24,866.88"
+ },
+ {
+  "id": "r-0208",
+  "region": "BGU",
+  "amount": "274.28"
+ },
+ {
+  "id": "r-0209",
+  "region": "HUA",
+  "amount": "187.09"
+ },
+ {
+  "id": "r-0210",
+  "region": "BGU",
+  "amount": "509.10"
+ },
+ {
+  "id": "r-0211",
+  "region": "XK",
+  "amount": "26,392.67"
+ },
+ {
+  "id": "r-0212",
+  "region": "LDA",
+  "amount": "347.88"
+ },
+ {
+  "id": "r-0213",
+  "region": "HUA",
+  "amount": "149.66"
+ },
+ {
+  "id": "r-0214",
+  "region": "LDA",
+  "amount": "45,232.68"
+ },
+ {
+  "id": "r-0215",
+  "region": "LDA",
+  "amount": "698.00"
+ },
+ {
+  "id": "r-0216",
+  "region": "CAB",
+  "amount": "7,435.97"
+ },
+ {
+  "id": "r-0217",
+  "region": "LDA",
+  "amount": "6,341.40"
+ },
+ {
+  "id": "r-0218",
+  "region": "HUA",
+  "amount": "12,827.34"
+ },
+ {
+  "id": "r-0219",
+  "region": "XK",
+  "amount": "366.50"
+ },
+ {
+  "id": "r-0220",
+  "region": "XK",
+  "amount": "579.89"
+ },
+ {
+  "id": "r-0221",
+  "region": "CAB",
+  "amount": "855.09"
+ },
+ {
+  "id": "r-0222",
+  "region": "BGU",
+  "amount": "101.75"
+ },
+ {
+  "id": "r-0223",
+  "region": "LDA",
+  "amount": "254.61"
+ },
+ {
+  "id": "r-0224",
+  "region": "BGU",
+  "amount": "1,142.20"
+ },
+ {
+  "id": "r-0225",
+  "region": "LDA",
+  "amount": "675.62"
+ },
+ {
+  "id": "r-0226",
+  "region": "HUA",
+  "amount": "237.64"
+ },
+ {
+  "id": "r-0227",
+  "region": "LDA",
+  "amount": "321.49"
+ },
+ {
+  "id": "r-0228",
+  "region": "BGU",
+  "amount": "127.72"
+ },
+ {
+  "id": "r-0229",
+  "region": "LDA",
+  "amount": "294.51"
+ },
+ {
+  "id": "r-0230",
+  "region": "LDA",
+  "amount": "-500.00"
+ },
+ {
+  "id": "r-0231",
+  "region": "XK",
+  "amount": "647.40"
+ },
+ {
+  "id": "r-0232",
+  "region": "BGU",
+  "amount": "-171.12"
+ },
+ {
+  "id": "r-0233",
+  "region": "BGU",
+  "amount": "18,287.71"
+ },
+ {
+  "id": "r-0234",
+  "region": "CAB",
+  "amount": "40,638.54"
+ },
+ {
+  "id": "r-0235",
+  "region": "BGU",
+  "amount": "19.27"
+ },
+ {
+  "id": "r-0236",
+  "region": "CAB",
+  "amount": "120.47"
+ },
+ {
+  "id": "r-0237",
+  "region": "BGU",
+  "amount": "4,980.92"
+ },
+ {
+  "id": "r-0238",
+  "region": "HUA",
+  "amount": "974.50"
+ },
+ {
+  "id": "r-0239",
+  "region": "LDA",
+  "amount": "22,983.93"
+ },
+ {
+  "id": "r-0240",
+  "region": "BGU",
+  "amount": "-500.00"
+ },
+ {
+  "id": "r-0241",
+  "region": "LDA",
+  "amount": "986.76"
+ },
+ {
+  "id": "r-0242",
+  "region": "BGU",
+  "amount": "294.15"
+ },
+ {
+  "id": "r-0243",
+  "region": "LDA",
+  "amount": "215.40"
+ },
+ {
+  "id": "r-0244",
+  "region": "BGU",
+  "amount": "31,783.16"
+ },
+ {
+  "id": "r-0245",
+  "region": "LDA",
+  "amount": "498.75"
+ },
+ {
+  "id": "r-0246",
+  "region": "BGU",
+  "amount": "283.51"
+ },
+ {
+  "id": "r-0247",
+  "region": "LDA",
+  "amount": "622.82"
+ },
+ {
+  "id": "r-0248",
+  "region": "BGU",
+  "amount": "835.45"
+ },
+ {
+  "id": "r-0249",
+  "region": "BGU",
+  "amount": "22,866.81"
+ },
+ {
+  "id": "r-0250",
+  "region": "CAB",
+  "amount": "27,506.60"
+ },
+ {
+  "id": "r-0251",
+  "region": "XK",
+  "amount": "183.37"
+ },
+ {
+  "id": "r-0252",
+  "region": "CAB",
+  "amount": "372.19"
+ },
+ {
+  "id": "r-0253",
+  "region": "CAB",
+  "amount": "487.64"
+ },
+ {
+  "id": "r-0254",
+  "region": "LDA",
+  "amount": "377.05"
+ },
+ {
+  "id": "r-0255",
+  "region": "BGU",
+  "amount": "-500.00"
+ },
+ {
+  "id": "r-0256",
+  "region": "XK",
+  "amount": "977.61"
+ },
+ {
+  "id": "r-0257",
+  "region": "CAB",
+  "amount": "600.50"
+ },
+ {
+  "id": "r-0258",
+  "region": "LDA",
+  "amount": "881.80"
+ },
+ {
+  "id": "r-0259",
+  "region": "LDA",
+  "amount": "344.26"
+ },
+ {
+  "id": "r-0260",
+  "region": "LDA",
+  "amount": "28,175.47"
+ },
+ {
+  "id": "r-0261",
+  "region": "BGU",
+  "amount": "560.75"
+ },
+ {
+  "id": "r-0262",
+  "region": "BGU",
+  "amount": "355.58"
+ },
+ {
+  "id": "r-0263",
+  "region": "LDA",
+  "amount": "36,237.92"
+ },
+ {
+  "id": "r-0264",
+  "region": "BGU",
+  "amount": "759.07"
+ },
+ {
+  "id": "r-0265",
+  "region": "HUA",
+  "amount": "43,422.09"
+ },
+ {
+  "id": "r-0266",
+  "region": "BGU",
+  "amount": "351.86"
+ },
+ {
+  "id": "r-0267",
+  "region": "CAB",
+  "amount": "588.75"
+ },
+ {
+  "id": "r-0268",
+  "region": "LDA",
+  "amount": "9,170.20"
+ },
+ {
+  "id": "r-0269",
+  "region": "XK",
+  "amount": "909.42"
+ },
+ {
+  "id": "r-0270",
+  "region": "LDA",
+  "amount": "219.94"
+ },
+ {
+  "id": "r-0271",
+  "region": "XK",
+  "amount": "323.27"
+ },
+ {
+  "id": "r-0272",
+  "region": "XK",
+  "amount": "-500.00"
+ },
+ {
+  "id": "r-0273",
+  "region": "LDA",
+  "amount": "889.41"
+ },
+ {
+  "id": "r-0274",
+  "region": "HUA",
+  "amount": "528.55"
+ },
+ {
+  "id": "r-0275",
+  "region": "XK",
+  "amount": "169.61"
+ },
+ {
+  "id": "r-0276",
+  "region": "LDA",
+  "amount": "391.28"
+ },
+ {
+  "id": "r-0277",
+  "region": "XK",
+  "amount": "25,546.66"
+ },
+ {
+  "id": "r-0278",
+  "region": "HUA",
+  "amount": "1,351.60"
+ },
+ {
+  "id": "r-0279",
+  "region": "BGU",
+  "amount": "212.06"
+ },
+ {
+  "id": "r-0280",
+  "region": "LDA",
+  "amount": "49,172.38"
+ },
+ {
+  "id": "r-0281",
+  "region": "HUA",
+  "amount": "28,463.67"
+ },
+ {
+  "id": "r-0282",
+  "region": "CAB",
+  "amount": "4,097.60"
+ },
+ {
+  "id": "r-0283",
+  "region": "CAB",
+  "amount": "18,834.56"
+ },
+ {
+  "id": "r-0284",
+  "region": "XK",
+  "amount": "6,893.87"
+ },
+ {
+  "id": "r-0285",
+  "region": "CAB",
+  "amount": "109.66"
+ },
+ {
+  "id": "r-0286",
+  "region": "XK",
+  "amount": "27,600.20"
+ },
+ {
+  "id": "r-0287",
+  "region": "LDA",
+  "amount": "452.07"
+ },
+ {
+  "id": "r-0288",
+  "region": "XK",
+  "amount": "-425.16"
+ },
+ {
+  "id": "r-0289",
+  "region": "BGU",
+  "amount": "430.55"
+ },
+ {
+  "id": "r-0290",
+  "region": "LDA",
+  "amount": "936.61"
+ },
+ {
+  "id": "r-0291",
+  "region": "CAB",
+  "amount": "31,358.70"
+ },
+ {
+  "id": "r-0292",
+  "region": "LDA",
+  "amount": "471.57"
+ },
+ {
+  "id": "r-0293",
+  "region": "CAB",
+  "amount": "3,294.02"
+ },
+ {
+  "id": "r-0294",
+  "region": "BGU",
+  "amount": "68.36"
+ },
+ {
+  "id": "r-0295",
+  "region": "HUA",
+  "amount": "47,494.55"
+ },
+ {
+  "id": "r-0296",
+  "region": "CAB",
+  "amount": "658.68"
+ },
+ {
+  "id": "r-0297",
+  "region": "XK",
+  "amount": "806.63"
+ },
+ {
+  "id": "r-0298",
+  "region": "XK",
+  "amount": "876.42"
+ },
+ {
+  "id": "r-0299",
+  "region": "LDA",
+  "amount": "-356.80"
+ },
+ {
+  "id": "r-0300",
+  "region": "XK",
+  "amount": "921.04"
+ },
+ {
+  "id": "r-0301",
+  "region": "BGU",
+  "amount": "378.20"
+ },
+ {
+  "id": "r-0302",
+  "region": "HUA",
+  "amount": "585.63"
+ },
+ {
+  "id": "r-0303",
+  "region": "LDA",
+  "amount": "3,922.73"
+ },
+ {
+  "id": "r-0304",
+  "region": "XK",
+  "amount": "41,641.71"
+ },
+ {
+  "id": "r-0305",
+  "region": "BGU",
+  "amount": "766.05"
+ },
+ {
+  "id": "r-0306",
+  "region": "HUA",
+  "amount": "175.80"
+ },
+ {
+  "id": "r-0307",
+  "region": "HUA",
+  "amount": "857.58"
+ },
+ {
+  "id": "r-0308",
+  "region": "BGU",
+  "amount": "794.79"
+ },
+ {
+  "id": "r-0309",
+  "region": "CAB",
+  "amount": "35,961.53"
+ },
+ {
+  "id": "r-0310",
+  "region": "BGU",
+  "amount": "48,276.91"
+ },
+ {
+  "id": "r-0311",
+  "region": "XK",
+  "amount": "43.52"
+ },
+ {
+  "id": "r-0312",
+  "region": "LDA",
+  "amount": "729.17"
+ },
+ {
+  "id": "r-0313",
+  "region": "LDA",
+  "amount": "967.32"
+ },
+ {
+  "id": "r-0314",
+  "region": "CAB",
+  "amount": "182.98"
+ },
+ {
+  "id": "r-0315",
+  "region": "XK",
+  "amount": "431.77"
+ },
+ {
+  "id": "r-0316",
+  "region": "LDA",
+  "amount": "15,213.70"
+ },
+ {
+  "id": "r-0317",
+  "region": "LDA",
+  "amount": "857.96"
+ },
+ {
+  "id": "r-0318",
+  "region": "BGU",
+  "amount": "517.98"
+ },
+ {
+  "id": "r-0319",
+  "region": "XK",
+  "amount": "885.70"
+ },
+ {
+  "id": "r-0320",
+  "region": "LDA",
+  "amount": "194.12"
+ },
+ {
+  "id": "r-0321",
+  "region": "LDA",
+  "amount": "615.37"
+ },
+ {
+  "id": "r-0322",
+  "region": "LDA",
+  "amount": "883.71"
+ },
+ {
+  "id": "r-0323",
+  "region": "BGU",
+  "amount": "699.81"
+ },
+ {
+  "id": "r-0324",
+  "region": "XK",
+  "amount": "923.24"
+ },
+ {
+  "id": "r-0325",
+  "region": "XK",
+  "amount": "634.03"
+ },
+ {
+  "id": "r-0326",
+  "region": "BGU",
+  "amount": "932.84"
+ },
+ {
+  "id": "r-0327",
+  "region": "CAB",
+  "amount": "226.82"
+ },
+ {
+  "id": "r-0328",
+  "region": "CAB",
+  "amount": "53.77"
+ },
+ {
+  "id": "r-0329",
+  "region": "CAB",
+  "amount": "323.79"
+ },
+ {
+  "id": "r-0330",
+  "region": "CAB",
+  "amount": "381.96"
+ },
+ {
+  "id": "r-0331",
+  "region": "CAB",
+  "amount": "888.86"
+ },
+ {
+  "id": "r-0332",
+  "region": "XK",
+  "amount": "3,980.47"
+ },
+ {
+  "id": "r-0333",
+  "region": "LDA",
+  "amount": "112.24"
+ },
+ {
+  "id": "r-0334",
+  "region": "BGU",
+  "amount": "123.66"
+ },
+ {
+  "id": "r-0335",
+  "region": "LDA",
+  "amount": "362.69"
+ },
+ {
+  "id": "r-0336",
+  "region": "CAB",
+  "amount": "492.85"
+ },
+ {
+  "id": "r-0337",
+  "region": "HUA",
+  "amount": "943.96"
+ },
+ {
+  "id": "r-0338",
+  "region": "HUA",
+  "amount": "978.74"
+ },
+ {
+  "id": "r-0339",
+  "region": "LDA",
+  "amount": "967.07"
+ },
+ {
+  "id": "r-0340",
+  "region": "CAB",
+  "amount": "963.98"
+ },
+ {
+  "id": "r-0341",
+  "region": "LDA",
+  "amount": "335.92"
+ },
+ {
+  "id": "r-0342",
+  "region": "LDA",
+  "amount": "12,241.01"
+ },
+ {
+  "id": "r-0343",
+  "region": "LDA",
+  "amount": "37,089.99"
+ },
+ {
+  "id": "r-0344",
+  "region": "LDA",
+  "amount": "366.59"
+ },
+ {
+  "id": "r-0345",
+  "region": "XK",
+  "amount": "519.44"
+ },
+ {
+  "id": "r-0346",
+  "region": "LDA",
+  "amount": "8,103.83"
+ },
+ {
+  "id": "r-0347",
+  "region": "CAB",
+  "amount": "77.18"
+ },
+ {
+  "id": "r-0348",
+  "region": "HUA",
+  "amount": "701.06"
+ },
+ {
+  "id": "r-0349",
+  "region": "CAB",
+  "amount": "526.94"
+ },
+ {
+  "id": "r-0350",
+  "region": "CAB",
+  "amount": "841.80"
+ },
+ {
+  "id": "r-0351",
+  "region": "LDA",
+  "amount": "257.60"
+ },
+ {
+  "id": "r-0352",
+  "region": "CAB",
+  "amount": "42,633.03"
+ },
+ {
+  "id": "r-0353",
+  "region": "BGU",
+  "amount": "810.37"
+ },
+ {
+  "id": "r-0354",
+  "region": "HUA",
+  "amount": "773.08"
+ },
+ {
+  "id": "r-0355",
+  "region": "HUA",
+  "amount": "924.80"
+ },
+ {
+  "id": "r-0356",
+  "region": "LDA",
+  "amount": "482.25"
+ },
+ {
+  "id": "r-0357",
+  "region": "XK",
+  "amount": "776.37"
+ },
+ {
+  "id": "r-0358",
+  "region": "CAB",
+  "amount": "188.70"
+ },
+ {
+  "id": "r-0359",
+  "region": "XK",
+  "amount": "750.91"
+ },
+ {
+  "id": "r-0360",
+  "region": "XK",
+  "amount": "244.24"
+ },
+ {
+  "id": "r-0361",
+  "region": "HUA",
+  "amount": "640.76"
+ },
+ {
+  "id": "r-0362",
+  "region": "LDA",
+  "amount": "43,547.44"
+ },
+ {
+  "id": "r-0363",
+  "region": "LDA",
+  "amount": "922.87"
+ },
+ {
+  "id": "r-0364",
+  "region": "CAB",
+  "amount": "847.23"
+ },
+ {
+  "id": "r-0365",
+  "region": "CAB",
+  "amount": "4,466.59"
+ },
+ {
+  "id": "r-0366",
+  "region": "CAB",
+  "amount": "22,445.45"
+ },
+ {
+  "id": "r-0367",
+  "region": "BGU",
+  "amount": "14,810.35"
+ },
+ {
+  "id": "r-0368",
+  "region": "LDA",
+  "amount": "6.55"
+ },
+ {
+  "id": "r-0369",
+  "region": "BGU",
+  "amount": "791.61"
+ },
+ {
+  "id": "r-0370",
+  "region": "XK",
+  "amount": "20,882.01"
+ },
+ {
+  "id": "r-0371",
+  "region": "XK",
+  "amount": "237.86"
+ },
+ {
+  "id": "r-0372",
+  "region": "LDA",
+  "amount": "725.34"
+ },
+ {
+  "id": "r-0373",
+  "region": "CAB",
+  "amount": "787.85"
+ },
+ {
+  "id": "r-0374",
+  "region": "BGU",
+  "amount": "38,407.31"
+ },
+ {
+  "id": "r-0375",
+  "region": "XK",
+  "amount": "25.27"
+ },
+ {
+  "id": "r-0376",
+  "region": "LDA",
+  "amount": "308.20"
+ },
+ {
+  "id": "r-0377",
+  "region": "BGU",
+  "amount": "153.03"
+ },
+ {
+  "id": "r-0378",
+  "region": "CAB",
+  "amount": "44,464.77"
+ },
+ {
+  "id": "r-0379",
+  "region": "XK",
+  "amount": "418.90"
+ },
+ {
+  "id": "r-0380",
+  "region": "CAB",
+  "amount": "557.37"
+ },
+ {
+  "id": "r-0381",
+  "region": "BGU",
+  "amount": "602.98"
+ },
+ {
+  "id": "r-0382",
+  "region": "HUA",
+  "amount": "3,412.94"
+ },
+ {
+  "id": "r-0383",
+  "region": "CAB",
+  "amount": "22,200.75"
+ },
+ {
+  "id": "r-0384",
+  "region": "HUA",
+  "amount": "181.06"
+ },
+ {
+  "id": "r-0385",
+  "region": "LDA",
+  "amount": "11.49"
+ },
+ {
+  "id": "r-0386",
+  "region": "BGU",
+  "amount": "3,646.60"
+ },
+ {
+  "id": "r-0387",
+  "region": "LDA",
+  "amount": "31,670.01"
+ },
+ {
+  "id": "r-0388",
+  "region": "LDA",
+  "amount": "41,734.81"
+ },
+ {
+  "id": "r-0389",
+  "region": "LDA",
+  "amount": "1,922.79"
+ },
+ {
+  "id": "r-0390",
+  "region": "CAB",
+  "amount": "410.26"
+ },
+ {
+  "id": "r-0391",
+  "region": "CAB",
+  "amount": "158.06"
+ },
+ {
+  "id": "r-0392",
+  "region": "LDA",
+  "amount": "353.69"
+ },
+ {
+  "id": "r-0393",
+  "region": "CAB",
+  "amount": "779.93"
+ },
+ {
+  "id": "r-0394",
+  "region": "LDA",
+  "amount": "43.16"
+ },
+ {
+  "id": "r-0395",
+  "region": "LDA",
+  "amount": "270.11"
+ },
+ {
+  "id": "r-0396",
+  "region": "BGU",
+  "amount": "969.76"
+ },
+ {
+  "id": "r-0397",
+  "region": "LDA",
+  "amount": "453.83"
+ },
+ {
+  "id": "r-0398",
+  "region": "LDA",
+  "amount": "379.39"
+ },
+ {
+  "id": "r-0399",
+  "region": "LDA",
+  "amount": "328.67"
+ },
+ {
+  "id": "r-0400",
+  "region": "XK",
+  "amount": "25,405.88"
+ }
+]

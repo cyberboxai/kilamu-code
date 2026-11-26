@@ -31,7 +31,8 @@ Status values: ✅ done and verified · 🟡 done, not fully verified · ⏳ pla
 - ✅ Budget estimates, budget stop, model policy, cost per verified task
 - ✅ Local deterministic benchmarks (`npm run bench`)
 - ✅ A/B benchmark harness (`scripts/ab-bench.ts`). First run on 2026-11-26: 3 tasks × 3 runs, 18/18 verified, overhead measured. Results are in `docs/COST_ENGINE.md`.
-- ⏳ A/B benchmark at full protocol scale: remaining task kinds, a task large enough for SUBAGENT mode, N ≥ 5, randomised arm order, isolated user config.
+- ✅ A/B harness v2: 7 fixtures with reference solutions proven by tests, tracked-files-only trials, seeded arm order, `--isolate`, engagement tracking
+- ⏳ A/B benchmark at full protocol scale: run harness v2 with `--runs 5 --isolate` (70 trials, needs consent)
 
 ## Phase 4: Persistent execution ✅
 - ✅ Durable state, checkpoints, bounded retries, attempt-bound verification
@@ -52,7 +53,7 @@ Status values: ✅ done and verified · 🟡 done, not fully verified · ⏳ pla
 - ✅ Update-safe statusline shim (R-07)
 
 ## Next up (priority order)
-1. Extend the A/B fixtures (schema, security, log triage, one multi-file task that triggers SUBAGENT) and re-run at N ≥ 5. Tune mode thresholds from the data.
+1. Run A/B harness v2 at N = 5 with `--isolate` (needs consent). Tune mode thresholds from the data.
 2. Live TEAM-mode execution test with Agent Teams in an interactive session.
 3. Live validation of PostToolUse compression and SessionEnd.
 4. Tree-sitter extractors for TS/JS and Python.

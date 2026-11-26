@@ -91,10 +91,38 @@ Totals: both arms verified 9/9. Cost per verified task: A 0.1227 USD, B 0.1183 U
 - **The total "−3.6% cost per verified task" for B is not a savings claim.** It is within noise and driven by that one A outlier.
 - **Kilamu did not engage.** No trial in either arm spawned a subagent. On these small single-agent tasks, arm B measured Kilamu's overhead only, not its orchestration, context packs or verification.
 - **Confound.** Both arms load the same user-level configuration (global CLAUDE.md, other enabled plugins). Only `--plugin-dir` differs.
+- **Inherited environment (found after the run).** The harness was started from inside a Claude Code session, and both arms inherited that session's environment:
+  - its session identity and messaging variables;
+  - `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS`;
+  - `KILAMU_SESSION_ID`.
 
-### What is still needed before any savings claim
-1. Fixtures for the remaining task kinds (schema investigation, security review, log triage), plus at least one multi-file task large enough to trigger SUBAGENT mode.
-2. N ≥ 5 runs per cell, with arm order randomised per run.
-3. A clean user configuration for both arms, for example an isolated `CLAUDE_CONFIG_DIR`.
+  Both arms got the same values, so the comparison stays like-for-like. But Kilamu in arm B ran under a foreign session id. Harness v2 scrubs these variables.
+
+### Harness v2 (ready, not yet run)
+The gaps above are addressed in the harness. The paid run has not happened yet.
+
+- **Fixtures (`tests/fixtures/ab/`).** There are 7 tasks:
+  - the original 3;
+  - `schema-rename` (rename `customer_id` → `account_id` across schema, model, repository, serializer, API and report, checked with `node:sqlite`);
+  - `security-fix` (path traversal and SQL injection, including a second injectable function the task does not name);
+  - `log-triage` (wrong batch totals, with the clue in a 4,287-line log);
+  - `multi-feature` (4 independent modules with 19 tests, sized to make SUBAGENT mode possible).
+- **Reference solutions (`tests/fixtures/ab-solutions/`).** They live outside the fixture directory. `tests/benchmarks/ab-fixtures.test.ts` proves several things for every fixture:
+  - it fails as shipped;
+  - it passes with its solution, with `test/` unchanged;
+  - every path its TASK.md names is actually shipped. The log-triage log was at first dropped by the repository's `*.log` ignore rule, which this check now catches.
+- **Keeping solutions out of reach.** Arm B's `--plugin-dir` is a temp copy of the plugin's own files (`.claude-plugin`, `agents`, `bin`, `hooks`, `skills`, `src`, `package.json`), not the repository. So neither arm learns the repository path. A session whose output mentions `ab-solutions` is marked invalid.
+- **Trial setup.** Each trial copies only the fixture's git-visible files, so ignored local state such as `.omc/` cannot leak in. (In the first run, a stray 342-byte `.omc` state file was copied into both arms of `feature-slugify`.)
+- **Tamper check.** The baseline is the trial's own `test/` tree, hashed before the agent runs, not the source directory.
+- **Clean environment.** Both arms run with the parent session's Claude Code identity, flags and every `KILAMU_*` variable removed. Kept are `CLAUDE_CONFIG_DIR`, the OAuth token and provider selection. Repository paths are removed from `PATH`. Agent Teams are therefore off in both arms unless enabled in project settings.
+- **Arm order.** It is shuffled per (run, task) from a recorded `--seed`.
+- **`--isolate`.** It passes `--setting-sources project,local --strict-mcp-config` to both arms. `--bare` is not used, because it also disables plugin hooks (Kilamu's included) and accepts only API-key auth.
+  - **Unverified:** whether this drops user-enabled plugins, and whether the global CLAUDE.md still loads. `claude plugin list` ignores these flags, so it cannot show this.
+  - **Evidence:** each trial now records the `plugins` and MCP server count from its session's `system/init` event.
+  - **Enforced:** after every (run, task) pair, arm B must load exactly arm A's plugins plus Kilamu. Otherwise the run aborts and writes what it has, so a broken isolation costs at most one pair. This proves the arms are equivalent. It does not prove that no user-level plugin loaded in both.
+- **Engagement.** Each trial records Kilamu CLI calls (including multi-line and path-qualified invocations), Kilamu skill invocations, Kilamu agent calls and all Agent/Task calls made by the main agent. These are parsed from `--output-format stream-json`. The report shows "Kilamu engaged" per cell.
+- **Costs and tokens.** A timed-out session keeps its partial stream. A trial without a cost figure is reported as missing, never counted as 0. Tokens come from `modelUsage`, which covers all models including subagents, with `usage` (main loop only) as the fallback. The source is recorded per trial.
+
+Planned run: `--runs 5 --isolate`, 7 tasks × 5 × 2 = 70 trials on `sonnet`. The first run's per-trial cost suggests about 9–20 USD (ESTIMATED). It needs the founder's go-ahead.
 
 No savings percentage versus plain Claude Code is claimed.
