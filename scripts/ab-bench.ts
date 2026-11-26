@@ -97,6 +97,8 @@ interface Trial {
   tokenSource: 'modelUsage' | 'usage' | null; subagents: number | null; permissionDenials: number | null;
   subagentCalls: number | null; kilamuAgentCalls: number | null; kilamuCliCalls: number | null; kilamuSkills: string[];
   plugins: string[] | null; mcpServers: number | null; solutionLeak: boolean;
+  /** Denied tool calls as "Tool: input" (truncated), to explain permissionDenials. */
+  deniedTools: string[];
   note: string;
 }
 
@@ -134,13 +136,16 @@ type Stream = ReturnType<typeof parseStream>;
 
 function runClaude(dir: string, task: string, arm: Arm, plugin: string, o: Options, env: NodeJS.ProcessEnv): { stream: Stream | null; leak: boolean; note: string } {
   const tools = ['Read', 'Edit', 'Write', 'Glob', 'Grep', 'Agent', 'Skill', 'TodoWrite', 'Bash(node:*)', 'Bash(npm:*)', 'Bash(git:*)', 'Bash(ls:*)', 'Bash(cat:*)'];
+  // Tools of runtime-registered Claude Code built-ins whose presence can race at startup; removed from both arms
+  // so they cannot add context to one arm only. None of the fixtures needs them.
+  const disallowed = ['mcp__easel__chart'];
   const args = ['-p', '--model', o.model, '--output-format', 'stream-json', '--verbose', '--max-turns', String(o.maxTurns)];
   if (o.isolate) args.push('--setting-sources', 'project,local', '--strict-mcp-config');
   if (arm === 'B-kilamu') {
     args.push('--plugin-dir', plugin);
     tools.push('Bash(kilamu:*)');
   }
-  args.push('--allowedTools', ...tools, '--', prompt(task));
+  args.push('--allowedTools', ...tools, '--disallowedTools', ...disallowed, '--', prompt(task));
   const r = sh('claude', args, dir, env, o.timeoutSec * 1000);
   // Parse whatever was streamed even on timeout/spawn errors, so partial sessions keep their evidence.
   const stdout = typeof r.stdout === 'string' ? r.stdout : '';
@@ -253,6 +258,7 @@ async function main(): Promise<void> {
   const rand = prng(o.seed);
   const plugin = stagePlugin();
   let aborted: string | null = null;
+  let builtinDiffPairs = 0;
   try {
     for (let run = 1; run <= o.runs; run++) {
       for (const task of o.tasks) {
@@ -279,6 +285,9 @@ async function main(): Promise<void> {
               subagentCalls: stream ? stream.engagement.subagentCalls : null, kilamuAgentCalls: stream ? stream.engagement.kilamuAgentCalls : null,
               kilamuCliCalls: stream ? stream.engagement.kilamuCliCalls : null, kilamuSkills: stream?.engagement.kilamuSkills ?? [],
               plugins: stream?.plugins ?? null, mcpServers: stream?.mcpServers ?? null, solutionLeak: leak,
+              deniedTools: Array.isArray(json?.permission_denials)
+                ? (json!.permission_denials as Array<Record<string, unknown>>).map((d) => `${String(d.tool_name ?? '?')}: ${JSON.stringify(d.tool_input ?? {}).slice(0, 160)}`)
+                : [],
               note: [note, acc.tampered ? 'tests modified' : ''].filter(Boolean).join('; '),
             };
             trials.push(t);
@@ -291,8 +300,12 @@ async function main(): Promise<void> {
           const pair = trials.slice(-2);
           const pa = pair.find((t) => t.arm === 'A-plain')?.plugins ?? null;
           const pb = pair.find((t) => t.arm === 'B-kilamu')?.plugins ?? null;
-          const why = checkArmPlugins(pa, pb);
-          if (why) throw new Error(`arm equivalence check failed for ${task} run ${run}: ${why}`);
+          const check = checkArmPlugins(pa, pb);
+          if (check.error) throw new Error(`arm equivalence check failed for ${task} run ${run}: ${check.error}`);
+          if (check.builtinDiff.length) {
+            for (const t of pair) t.note = [t.note, `built-in plugin(s) in one arm only: ${check.builtinDiff.join(', ')}`].filter(Boolean).join('; ');
+            builtinDiffPairs++;
+          }
         }
       }
     }
@@ -305,6 +318,7 @@ async function main(): Promise<void> {
   }
   let md = report(trials, o, startedAt);
   if (aborted) md = `> **ABORTED** after ${trials.length} trial(s): ${aborted}\n\n${md}`;
+  if (o.isolate && !o.dryRun) md += `\n\nBuilt-in plugin differences (tolerated, see trial notes): ${builtinDiffPairs} of ${Math.floor(trials.length / 2)} pair(s).`;
   if (o.dryRun) {
     console.log(`\n${md}`);
     if (aborted) process.exitCode = 1;

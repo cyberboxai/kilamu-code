@@ -13,6 +13,7 @@ All notable changes follow [Keep a Changelog](https://keepachangelog.com/) and S
 - **Tamper check.** The hash now covers nested directories and uses the trial copy as its baseline.
 - **Plugin copy.** Arm B gets a staged copy of the plugin instead of the repository root, which kept the reference solutions discoverable.
 - **Isolation.** `--isolate` aborts when arm B does not load exactly arm A's plugins plus Kilamu.
+- **Built-in plugins.** Built-ins that differ between arms (`cc-plugin-*`) are tolerated and recorded. The easel chart tool is disallowed in both arms. Denied tool calls are recorded per trial.
 - **Trial environment.** Trials no longer inherit the parent Claude Code session's environment: session id, messaging socket, Agent Teams flag and `KILAMU_SESSION_ID`.
 - **Missing costs.** Timed-out sessions keep their partial stream, and missing costs are reported, not counted as 0.
 - **Log-triage log.** The log is no longer dropped by the `*.log` ignore rule.

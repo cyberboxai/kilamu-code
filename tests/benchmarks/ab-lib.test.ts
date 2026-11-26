@@ -197,15 +197,21 @@ describe('totalTokens', () => {
 
 describe('checkArmPlugins', () => {
   it('accepts arm B = arm A plus Kilamu', () => {
-    expect(checkArmPlugins([], ['kilamu-code'])).toBeNull();
-    expect(checkArmPlugins(['agents-md'], ['agents-md', 'kilamu-code@inline'])).toBeNull();
+    expect(checkArmPlugins([], ['kilamu-code'])).toEqual({ error: null, builtinDiff: [] });
+    expect(checkArmPlugins(['agents-md'], ['agents-md', 'kilamu-code@inline']).error).toBeNull();
+  });
+  it('tolerates but reports Claude Code built-ins present in one arm only', () => {
+    // Observed in a live probe: cc-plugin-easel registered in arm A only.
+    expect(checkArmPlugins(['cc-plugin-privacy', 'cc-plugin-easel'], ['kilamu-code', 'cc-plugin-privacy']))
+      .toEqual({ error: null, builtinDiff: ['cc-plugin-easel'] });
+    expect(checkArmPlugins([], ['kilamu-code', 'cc-plugin-x']).builtinDiff).toEqual(['cc-plugin-x']);
   });
   it('rejects unknown plugin lists, Kilamu in arm A, and any other difference', () => {
-    expect(checkArmPlugins(null, ['kilamu-code'])).toMatch(/cannot be checked/);
-    expect(checkArmPlugins(['kilamu-code'], ['kilamu-code'])).toMatch(/arm A loaded Kilamu/);
-    expect(checkArmPlugins(['omc'], ['kilamu-code'])).toMatch(/missing plugins.*omc/);
-    expect(checkArmPlugins([], ['kilamu-code', 'omc'])).toMatch(/exactly Kilamu/);
-    expect(checkArmPlugins([], [])).toMatch(/adds: nothing/);
+    expect(checkArmPlugins(null, ['kilamu-code']).error).toMatch(/cannot be checked/);
+    expect(checkArmPlugins(['kilamu-code'], ['kilamu-code']).error).toMatch(/arm A loaded Kilamu/);
+    expect(checkArmPlugins(['omc'], ['kilamu-code']).error).toMatch(/missing plugins.*omc/);
+    expect(checkArmPlugins([], ['kilamu-code', 'omc']).error).toMatch(/exactly Kilamu/);
+    expect(checkArmPlugins(['cc-plugin-easel'], ['cc-plugin-easel']).error).toMatch(/adds: nothing/);
   });
 });
 

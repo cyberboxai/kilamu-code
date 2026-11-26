@@ -165,19 +165,33 @@ export function totalTokens(result: Record<string, unknown> | null): { tokens: n
   return { tokens: null, source: null };
 }
 
+/** Claude Code's own built-in plugins (`cc-plugin-*`); some register at runtime, so their presence at init can race. */
+export const isBuiltinPlugin = (p: string): boolean => p.startsWith('cc-plugin-');
+
+export interface ArmCheck {
+  /** Why the pair is invalid (the run must abort), or null. */
+  error: string | null;
+  /** Built-in plugins present in only one arm: tolerated, but recorded. */
+  builtinDiff: string[];
+}
+
 /**
- * Validity check for an A/B pair: the arms must load the same plugins except that arm B adds
- * Kilamu. Returns a reason string when the pair is invalid, or null when it is valid.
+ * Validity check for an A/B pair: apart from Claude Code built-ins, the arms must load the same
+ * plugins except that arm B adds Kilamu.
  */
-export function checkArmPlugins(a: string[] | null, b: string[] | null): string | null {
-  if (a === null || b === null) return 'the session init event did not report loaded plugins, so arm equivalence cannot be checked';
+export function checkArmPlugins(a: string[] | null, b: string[] | null): ArmCheck {
+  const fail = (error: string): ArmCheck => ({ error, builtinDiff: [] });
+  if (a === null || b === null) return fail('the session init event did not report loaded plugins, so arm equivalence cannot be checked');
   const isKilamu = (p: string): boolean => p === 'kilamu-code' || p.startsWith('kilamu-code@');
-  if (a.some(isKilamu)) return `arm A loaded Kilamu: ${a.join(', ')}`;
-  const extraB = b.filter((p) => !a.includes(p));
-  const missingB = a.filter((p) => !b.includes(p));
-  if (missingB.length) return `arm B is missing plugins that arm A loaded: ${missingB.join(', ')}`;
-  if (extraB.length !== 1 || !isKilamu(extraB[0]!)) return `arm B must add exactly Kilamu to arm A's plugins; it adds: ${extraB.join(', ') || 'nothing'}`;
-  return null;
+  if (a.some(isKilamu)) return fail(`arm A loaded Kilamu: ${a.join(', ')}`);
+  const onlyA = a.filter((p) => !b.includes(p));
+  const onlyB = b.filter((p) => !a.includes(p));
+  const builtinDiff = [...onlyA, ...onlyB].filter(isBuiltinPlugin).sort();
+  const missingB = onlyA.filter((p) => !isBuiltinPlugin(p));
+  const extraB = onlyB.filter((p) => !isBuiltinPlugin(p));
+  if (missingB.length) return fail(`arm B is missing plugins that arm A loaded: ${missingB.join(', ')}`);
+  if (extraB.length !== 1 || !isKilamu(extraB[0]!)) return fail(`arm B must add exactly Kilamu to arm A's plugins; it adds: ${extraB.join(', ') || 'nothing'}`);
+  return { error: null, builtinDiff };
 }
 
 /** Claude Code variables a trial may inherit: config location and credentials/provider selection only. */
